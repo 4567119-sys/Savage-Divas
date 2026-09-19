@@ -1,663 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Royal Square Financial</title>
-  <meta name="description" content="Royal Square Financial — secure access to financial services, requests and claims.">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Square Financial — AI Document Extractor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- LOGIN -->
-  <section id="view-login" class="login-screen" aria-labelledby="loginHeading">
-    <div class="login-card">
-      <img src="assets/logo.svg" alt="Royal Square Financial" class="login-logo">
-      <h1 id="loginHeading" class="login-title">Welcome to Royal Square Financial</h1>
-      <p class="login-sub">Secure access to your financial services and requests.</p>
-
-      <div class="segmented" role="tablist" aria-label="Identification method">
-        <button type="button" id="idMethodSa" role="tab" aria-pressed="true">South African ID Number</button>
-        <button type="button" id="idMethodPassport" role="tab" aria-pressed="false">Passport Number</button>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1>Royal Square Financial</h1>
+          <span class="brand-badge">Claims Document Intelligence Subsystem</span>
+        </div>
       </div>
-
-      <form id="loginForm" novalidate>
-        <div id="saIdGroup" class="form-group">
-          <label for="loginSaId" class="form-label">South African ID Number</label>
-          <span class="form-hint">Enter your 13-digit ID number</span>
-          <input type="text" id="loginSaId" class="form-control" inputmode="numeric" maxlength="13" placeholder="8001015009087" autocomplete="off" aria-describedby="saIdError">
-          <p id="saIdError" class="field-error" role="alert">Please enter a valid 13-digit South African ID number. Use numbers only.</p>
+      <div class="navbar-actions">
+        <div id="serviceStatus" class="status-indicator online">
+          <span class="status-dot"></span>
+          <span id="statusText">Checking Service...</span>
         </div>
-
-        <div id="passportGroup" class="form-group" hidden>
-          <label for="loginPassport" class="form-label">Passport Number</label>
-          <span class="form-hint">Enter your passport number</span>
-          <input type="text" id="loginPassport" class="form-control" maxlength="6" placeholder="AB1234" autocomplete="off" aria-describedby="passportError">
-          <p id="passportError" class="field-error" role="alert">Use 2 letters followed by 4 numbers, for example AB1234.</p>
-        </div>
-
-        <button type="submit" id="btnContinueLogin" class="btn btn-primary btn-block">Continue</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- AUTHENTICATED APP -->
-  <div id="app-shell" class="app-shell" hidden>
-    <header class="site-header header-relative">
-      <div class="header-container">
-        <a href="#" id="brandLogoLink" class="brand-wrapper" aria-label="Royal Square Financial home">
-          <img src="assets/logo.svg" alt="" class="brand-logo">
-          <div>
-            <div class="brand-title">Royal Square Financial</div>
-            <p class="brand-subtitle">Client services</p>
-          </div>
+        <a href="/docs" target="_blank" class="nav-btn api-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Swagger Docs
         </a>
-        <div class="header-tools">
-          <div id="networkBadge" class="network-badge online" role="status">
-            <span id="networkIcon" aria-hidden="true">●</span>
-            <span id="networkStatusText">Online</span>
-          </div>
-          <button type="button" id="btnVoiceMenu" class="icon-btn" aria-expanded="false" aria-controls="voicePanel">
-            🔊 Voice
-          </button>
-          <button type="button" id="btnUserAuth" class="icon-btn">
-            <span id="userAuthLabel">Account</span>
-          </button>
-        </div>
       </div>
-
-      <div id="voicePanel" class="voice-panel" hidden>
-        <h3>Voice</h3>
-        <button type="button" class="voice-option selected" data-voice="1">
-          Voice 1
-          <small>Natural female voice</small>
-        </button>
-        <button type="button" class="voice-option" data-voice="2">
-          Voice 2
-          <small>Natural male voice</small>
-        </button>
-        <button type="button" class="voice-option" data-voice="3">
-          Voice 3
-          <small>Alternative female voice</small>
-        </button>
-        <button type="button" class="voice-option" data-voice="4">
-          Voice 4
-          <small>Alternative male voice</small>
-        </button>
-        <button type="button" id="btnReadAloud" class="btn btn-secondary btn-block btn-sm" style="margin-top: 0.65rem;">
-          🔊 Read Aloud
-        </button>
-      </div>
-
-      <nav class="site-nav" aria-label="Primary">
-        <div class="nav-inner">
-          <button type="button" class="nav-link" data-nav="home" aria-current="page">Home</button>
-          <button type="button" class="nav-link" data-nav="requests">My Requests</button>
-          <button type="button" class="nav-link" data-nav="goals">Goals</button>
-          <button type="button" class="nav-link" data-nav="messages">Messages</button>
-          <button type="button" class="nav-link" data-nav="settings">Settings</button>
-        </div>
-      </nav>
     </header>
 
-    <div id="notificationsRegion" aria-live="assertive" role="region" aria-label="Alerts">
-      <div id="offlineNotice" class="notice-banner offline" style="display: none;">
-        <div class="notice-content">
-          <div>
-            <div class="notice-title">🟠 You're offline</div>
-            <div class="notice-body">You can still start a request. It will be saved on this device until you are back online.</div>
-          </div>
-        </div>
-      </div>
-      <div id="onlineSyncNotice" class="notice-banner online-sync" style="display: none;">
-        <div class="notice-content">
-          <div>
-            <div class="notice-title">🟢 Connection restored</div>
-            <div class="notice-body"><span id="pendingCount">1</span> request is ready to submit.</div>
-          </div>
-        </div>
-        <button id="btnSyncNow" class="btn btn-success btn-sm" type="button">Sync Request</button>
-      </div>
+    <!-- Royal Square Portfolio Banner -->
+    <div class="portfolio-banner">
+      <span class="portfolio-tag">Financial Planning</span>
+      <span class="portfolio-tag">Life Insurance</span>
+      <span class="portfolio-tag">Funeral Insurance</span>
+      <span class="portfolio-tag">Health Insurance</span>
+      <span class="portfolio-tag active">Personal Insurance</span>
+      <span class="portfolio-tag active">Commercial Insurance</span>
+      <span class="portfolio-tag">Goal-Based Investments</span>
     </div>
 
-    <main id="main-content" class="main-wrapper" tabindex="-1">
+    <!-- Main Content -->
+    <main class="main-grid">
+      <!-- Left Column: Upload & Controls -->
+      <section class="panel upload-panel">
+        <div class="panel-header">
+          <h2>Document Ingestion</h2>
+          <span class="panel-desc">Upload accident claim, police docket, or SAPS AR form</span>
+        </div>
 
-      <section id="view-home" class="app-view">
-        <div class="home-block">
-          <h1 class="page-title">What needs my attention?</h1>
-          <p class="page-lead">We will tell you plainly if something needs a response. You do not need to know which form to use.</p>
-          <div class="attention-list">
-            <article class="attention-card action">
-              <div>
-                <div class="card-kicker">Action required</div>
-                <p class="card-copy">Upload missing police documentation for Claim #RS-1042.</p>
-              </div>
-              <button type="button" id="btnContinueClaim1042" class="btn btn-primary btn-sm">Continue</button>
-            </article>
-            <article class="attention-card upcoming">
-              <div>
-                <div class="card-kicker">Upcoming</div>
-                <p class="card-copy">Your annual financial review is due.</p>
-              </div>
-              <button type="button" id="btnScheduleReview" class="btn btn-secondary btn-sm">Schedule Review</button>
-            </article>
-            <article class="attention-card ok">
-              <div>
-                <div class="card-kicker">No action required</div>
-                <p class="card-copy">Your investment update has been received.</p>
-              </div>
-            </article>
+        <!-- Dropzone -->
+        <div id="dropzone" class="dropzone" tabindex="0">
+          <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.txt" />
+          <div class="dropzone-content">
+            <div class="drop-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <h3>Drag & drop document here</h3>
+            <p>Supports <strong>PDF, PNG, JPG, or Scanned TXT</strong></p>
+            <button type="button" id="browseBtn" class="secondary-btn">Browse Local File</button>
           </div>
         </div>
 
-        <div class="home-block">
-          <h2 class="page-title">What would you like to report or do?</h2>
-          <p class="page-lead">Tell us what happened and we'll guide you through the next steps.</p>
-          <div class="request-grid">
-            <button type="button" class="request-card" data-request="accident">
-              <span class="request-mark" aria-hidden="true">🚗</span>
-              <span>
-                <h3>I had an accident</h3>
-                <p>Report a vehicle accident and start a claim.</p>
-              </span>
-            </button>
-            <button type="button" class="request-card" data-request="document">
-              <span class="request-mark" aria-hidden="true">📄</span>
-              <span>
-                <h3>I need a document</h3>
-                <p>Statements, policy documents or certificates.</p>
-              </span>
-            </button>
-            <button type="button" class="request-card" data-request="renewal">
-              <span class="request-mark" aria-hidden="true">🔄</span>
-              <span>
-                <h3>I need to renew something</h3>
-                <p>Insurance, policy or document renewals.</p>
-              </span>
-            </button>
-            <button type="button" class="request-card" data-request="details">
-              <span class="request-mark" aria-hidden="true">🏠</span>
-              <span>
-                <h3>I need to update my details</h3>
-                <p>Personal or contact information changes.</p>
-              </span>
-            </button>
-            <button type="button" class="request-card" data-request="beneficiary">
-              <span class="request-mark" aria-hidden="true">💔</span>
-              <span>
-                <h3>I need help with a death/beneficiary claim</h3>
-                <p>We will guide you through the relevant process.</p>
-              </span>
-            </button>
-            <button type="button" class="request-card" data-request="plan">
-              <span class="request-mark" aria-hidden="true">💰</span>
-              <span>
-                <h3>I need help with my financial plan</h3>
-                <p>Reviews, goals and planning requests.</p>
-              </span>
-            </button>
-            <button type="button" class="request-card" data-request="other">
-              <span class="request-mark" aria-hidden="true">❓</span>
-              <span>
-                <h3>Something else</h3>
-                <p>Describe what you need in your own words.</p>
-              </span>
-            </button>
+        <!-- Selected File Banner -->
+        <div id="fileBanner" class="file-banner hidden">
+          <div class="file-icon">📄</div>
+          <div class="file-details">
+            <span id="fileName" class="file-name">document.pdf</span>
+            <span id="fileSize" class="file-size">0 KB</span>
           </div>
+          <button id="clearFileBtn" class="icon-btn" title="Remove file">✕</button>
         </div>
-      </section>
 
-      <section id="view-requests" class="app-view" hidden>
-        <h1 class="page-title">My Requests</h1>
-        <p class="page-lead">Track accident reports and other requests you have started.</p>
-        <div id="claimsList" class="claim-card-list"></div>
-      </section>
-
-      <section id="view-goals" class="app-view" hidden>
-        <h1 class="page-title">Goals</h1>
-        <p class="page-lead">Your adviser can help you review these when you ask for a financial-plan conversation.</p>
-        <div class="panel" style="margin-top: 0.85rem;">
-          <h2 class="section-title">Retirement savings</h2>
-          <p class="section-subtitle">On track for your 2026 review. No action needed this week.</p>
-        </div>
-        <div class="panel" style="margin-top: 0.65rem;">
-          <h2 class="section-title">Emergency fund</h2>
-          <p class="section-subtitle">You asked to revisit this after your next salary date.</p>
-        </div>
-      </section>
-
-      <section id="view-messages" class="app-view" hidden>
-        <h1 class="page-title">Messages</h1>
-        <p class="page-lead">Short updates from Royal Square. We will also SMS or WhatsApp you if you miss something important.</p>
-        <article class="claim-card" style="margin-top: 0.85rem;">
-          <div>
-            <div class="claim-ref-number">Claim #RS-1042</div>
-            <p class="section-subtitle">Please upload the police document so assessment can continue.</p>
-          </div>
-        </article>
-        <article class="claim-card">
-          <div>
-            <div class="claim-ref-number">Investment update</div>
-            <p class="section-subtitle">Your latest statement has been received. No action required.</p>
-          </div>
-        </article>
-      </section>
-
-      <section id="view-settings" class="app-view" hidden>
-        <h1 class="sr-only">Settings</h1>
-        <div class="settings-layout">
-          <section class="settings-section" aria-labelledby="setAccount">
-            <h3 id="setAccount">Account</h3>
-            <div class="review-row">
-              <div class="review-key">Identification method</div>
-              <div class="review-val" id="settingsIdMethod">South African ID Number</div>
-            </div>
-            <div class="review-row">
-              <div class="review-key">Contact information</div>
-              <div class="review-val" id="settingsContact">082 555 0192 · nokuthula@example.co.za</div>
-            </div>
-            <div style="margin-top: 0.75rem;">
-              <button type="button" id="btnSignOut" class="btn btn-secondary">Sign out</button>
-            </div>
-          </section>
-
-          <section class="settings-section" aria-labelledby="setA11y">
-            <h3 id="setA11y">Accessibility</h3>
-            <div class="toggle-switch-row">
-              <span class="switch-label">Read Aloud on important instructions</span>
-              <label class="switch">
-                <input type="checkbox" id="toggleReadAloudPref">
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="form-group" style="margin-top: 0.7rem;">
-              <label for="settingsVoiceSelect" class="form-label">Voice selection</label>
-              <select id="settingsVoiceSelect" class="settings-select">
-                <option value="1">Voice 1 — Natural female voice</option>
-                <option value="2">Voice 2 — Natural male voice</option>
-                <option value="3">Voice 3 — Alternative female voice</option>
-                <option value="4">Voice 4 — Alternative male voice</option>
-              </select>
-            </div>
-            <p class="form-label">Text size</p>
-            <div class="choice-group">
-              <button type="button" class="btn-choice text-size-btn" data-size="normal">Normal</button>
-              <button type="button" class="btn-choice text-size-btn" data-size="large">Large</button>
-              <button type="button" class="btn-choice text-size-btn" data-size="xlarge">Extra large</button>
-            </div>
-            <div class="toggle-switch-row">
-              <span class="switch-label">High contrast mode</span>
-              <label class="switch">
-                <input type="checkbox" id="toggleContrastInput">
-                <span class="slider"></span>
-              </label>
-            </div>
-          </section>
-
-          <section class="settings-section" aria-labelledby="setLang">
-            <h3 id="setLang">Language</h3>
-            <label for="langSelect" class="form-label">Preferred language</label>
-            <select id="langSelect" class="lang-select">
-              <option value="en">English</option>
-              <option value="xh">isiXhosa</option>
-              <option value="zu">isiZulu</option>
-              <option value="af">Afrikaans</option>
-              <option value="st">Sesotho</option>
-              <option value="tn">Setswana</option>
+        <!-- Engine & Options -->
+        <div class="control-group">
+          <label for="engineSelect">Extraction Engine</label>
+          <div class="select-wrapper">
+            <select id="engineSelect">
+              <option value="auto" selected>Auto (Multimodal AI with Local Fallback)</option>
+              <option value="gemini">Gemini Vision AI (API Key Required)</option>
+              <option value="local">Local Heuristic OCR & Pattern Parser</option>
             </select>
-          </section>
-
-          <section class="settings-section" aria-labelledby="setNotes">
-            <h3 id="setNotes">Notifications</h3>
-            <div class="toggle-switch-row">
-              <span class="switch-label">SMS notifications</span>
-              <label class="switch"><input type="checkbox" id="toggleSms" checked><span class="slider"></span></label>
-            </div>
-            <div class="toggle-switch-row">
-              <span class="switch-label">WhatsApp notifications</span>
-              <label class="switch"><input type="checkbox" id="toggleWhatsApp"><span class="slider"></span></label>
-            </div>
-            <div class="toggle-switch-row">
-              <span class="switch-label">Email notifications</span>
-              <label class="switch"><input type="checkbox" id="toggleEmail" checked><span class="slider"></span></label>
-            </div>
-          </section>
-
-          <section class="settings-section" aria-labelledby="setPrivacy">
-            <h3 id="setPrivacy">Privacy &amp; Security</h3>
-            <p class="section-subtitle">We use your information only to process the request you start. You can withdraw consent at any time by signing out or contacting us.</p>
-            <div class="toggle-switch-row">
-              <span class="switch-label">Consent to process request documents</span>
-              <label class="switch"><input type="checkbox" id="toggleConsent" checked><span class="slider"></span></label>
-            </div>
-            <p class="section-subtitle" style="margin-top: 0.65rem;">Security: this prototype stores information on this device until it is submitted.</p>
-            <div class="toggle-switch-row">
-              <span class="switch-label">Work offline (demo)</span>
-              <label class="switch"><input type="checkbox" id="toggleOfflineSim"><span class="slider"></span></label>
-            </div>
-          </section>
+          </div>
         </div>
+
+        <!-- Quick Samples for Hackathon Demo -->
+        <div class="quick-samples">
+          <label>Quick Test Fixtures (One-Click Demo):</label>
+          <div class="sample-buttons">
+            <button type="button" id="sample1Btn" class="sample-chip">
+              <span>🚗 Sandton SAPS Personal Motor #1</span>
+            </button>
+            <button type="button" id="sample2Btn" class="sample-chip">
+              <span>🚗 JHB Central Crash Report #2</span>
+            </button>
+            <button type="button" id="sample3Btn" class="sample-chip highlight-chip">
+              <span>🚛 Midrand SAPS Commercial Fleet #3</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="extractBtn" class="primary-btn pulse-glow" disabled>
+          <span class="btn-text">Extract Document Fields</span>
+          <span class="spinner hidden"></span>
+        </button>
       </section>
 
-      <section id="view-generic" class="app-view" hidden>
-        <h1 id="genericTitle" class="page-title">Start a request</h1>
-        <p id="genericLead" class="page-lead">Tell us what you need. We will route this to the right team.</p>
-        <form id="genericForm" class="panel" style="margin-top: 0.9rem;" novalidate>
-          <div class="form-group">
-            <label for="genericDetail" class="form-label">What do you need?</label>
-            <textarea id="genericDetail" class="form-control" rows="4" required></textarea>
+      <!-- Right Column: Extraction Results & JSON -->
+      <section class="panel results-panel">
+        <div class="panel-header">
+          <div class="results-title-group">
+            <h2>Extraction Results</h2>
+            <div id="confidenceGauge" class="confidence-gauge hidden">
+              <span class="gauge-label">Confidence</span>
+              <span id="overallScore" class="gauge-value">--%</span>
+            </div>
           </div>
-          <div class="form-nav-row">
-            <button type="button" id="btnGenericCancel" class="btn btn-secondary">Back to home</button>
-            <button type="submit" class="btn btn-primary">Submit request</button>
+          <div class="tab-buttons">
+            <button id="tabSummary" class="tab-btn active">Visual Dashboard</button>
+            <button id="tabJson" class="tab-btn">JSON Response</button>
+            <button id="tabIntegration" class="tab-btn">Node.js Express Snippet</button>
           </div>
-        </form>
-      </section>
+        </div>
 
-      <section id="view-report" class="app-view" hidden aria-labelledby="reportFlowHeading">
-        <h1 id="reportFlowHeading" class="sr-only">Accident reporting</h1>
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <h3>No Document Processed Yet</h3>
+          <p>Upload a police accident report or click a sample fixture above to see AI extraction in real time.</p>
+        </div>
 
-        <nav class="progress-container" aria-label="Claim progress">
-          <ol class="progress-steps">
-            <li id="pStep1" class="progress-step-item active" aria-current="step">
-              <div class="step-circle">1</div>
-              <span class="step-label">What happened</span>
-            </li>
-            <li id="pStep2" class="progress-step-item">
-              <div class="step-circle">2</div>
-              <span class="step-label">Documents</span>
-            </li>
-            <li id="pStep3" class="progress-step-item">
-              <div class="step-circle">3</div>
-              <span class="step-label">Review</span>
-            </li>
-            <li id="pStep4" class="progress-step-item">
-              <div class="step-circle">4</div>
-              <span class="step-label">Status</span>
-            </li>
-          </ol>
-        </nav>
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state hidden">
+          <div class="radar-spinner"></div>
+          <h3>Analyzing Document with AI...</h3>
+          <p id="loadingMsg">Running text extraction, detecting case numbers, police stations, officers & dates</p>
+        </div>
 
-        <aside class="guidance-card">
-          <div class="guidance-header">
-            <strong style="font-size: 0.8125rem;">This step</strong>
-            <button id="btnReadGuidance" class="btn btn-secondary btn-sm" type="button">🔊 Read Aloud</button>
-          </div>
-          <div class="guidance-q" data-i18n="whatNext">What do I need to do next?</div>
-          <div id="guideNext" class="guidance-a">Answer the questions below, then continue.</div>
-        </aside>
-
-        <section id="step-1" class="panel" aria-labelledby="step1Title">
-          <h2 id="step1Title" class="section-title">Step 1 — Tell us what happened</h2>
-          <form id="formStep1" novalidate>
-            <div class="form-row two">
-              <div class="form-group">
-                <label for="inputDate" class="form-label">Date</label>
-                <input type="date" id="inputDate" class="form-control" required>
+        <!-- Tab 1: Visual Dashboard -->
+        <div id="dashboardView" class="dashboard-view hidden">
+          <!-- Primary 4 Core Fields requested -->
+          <div class="section-label">Core Police & Claim Identifiers</div>
+          <div class="core-grid">
+            <!-- 1. Case Number -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Case Number / CAS</span>
+                <span id="caseConf" class="conf-pill">--</span>
               </div>
-              <div class="form-group">
-                <label for="inputTime" class="form-label">Approximate time</label>
-                <input type="time" id="inputTime" class="form-control">
-              </div>
+              <div id="caseValue" class="field-value">--</div>
+              <div id="caseSource" class="field-snippet">--</div>
             </div>
-            <div class="form-group">
-              <label for="inputLocation" class="form-label">Location</label>
-              <input type="text" id="inputLocation" class="form-control" placeholder="Street, suburb or landmark">
-            </div>
-            <div class="form-group">
-              <label for="inputVehicleReg" class="form-label">Vehicle registration</label>
-              <input type="text" id="inputVehicleReg" class="form-control" placeholder="e.g. CA 145-987">
-            </div>
-            <div class="form-group">
-              <label for="inputDescription" class="form-label">Short description</label>
-              <textarea id="inputDescription" class="form-control" rows="3" placeholder="In your own words, what happened?"></textarea>
-            </div>
-            <div class="form-nav-row">
-              <button type="button" id="btnStep1Cancel" class="btn btn-secondary">Back to home</button>
-              <button type="submit" class="btn btn-primary">Continue</button>
-            </div>
-          </form>
-        </section>
 
-        <section id="step-2" class="panel" hidden aria-labelledby="step2Title">
-          <h2 id="step2Title" class="section-title">Step 2 — Provide supporting documents</h2>
-          <p class="section-subtitle" style="margin-bottom: 0.9rem;">Upload what you have now. You can add more later.</p>
+            <!-- 2. Police Station -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Police Station</span>
+                <span id="stationConf" class="conf-pill">--</span>
+              </div>
+              <div id="stationValue" class="field-value">--</div>
+              <div id="stationSource" class="field-snippet">--</div>
+            </div>
 
-          <div class="doc-upload-card" id="cardDocPolice">
-            <div class="doc-card-header">
-              <div>
-                <h3 class="doc-card-title">Police documentation</h3>
-                <p class="doc-card-desc">Case document or SAPS report.</p>
+            <!-- 3. Officer Name -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Attending Officer</span>
+                <span id="officerConf" class="conf-pill">--</span>
               </div>
-              <span class="status-pill action-needed" id="badgePolice">Still needed</span>
+              <div id="officerValue" class="field-value">--</div>
+              <div id="officerSource" class="field-snippet">--</div>
             </div>
-            <div class="doc-actions-row">
-              <input type="file" id="filePolice" accept="image/*,application/pdf" class="file-input-hidden">
-              <button type="button" class="btn btn-primary btn-sm" id="btnUploadPolice">Upload</button>
-              <button type="button" id="btnSamplePolice" class="btn btn-secondary btn-sm">Use sample</button>
-            </div>
-            <div id="previewPolice" class="doc-preview-box" hidden>
-              <div class="doc-thumb" style="background:#f3f3f3;display:grid;place-items:center;">PDF</div>
-              <div class="doc-meta">
-                <div class="doc-name" id="fileNamePolice">police_report.pdf</div>
-                <div class="doc-status-badge">Saved on this device</div>
+
+            <!-- 4. Incident Date -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Incident Date</span>
+                <span id="dateConf" class="conf-pill">--</span>
               </div>
-              <button type="button" id="btnRemovePolice" class="btn btn-secondary btn-sm">Remove</button>
+              <div id="dateValue" class="field-value">--</div>
+              <div id="dateSource" class="field-snippet">--</div>
             </div>
           </div>
 
-          <div class="doc-upload-card" id="cardDocDamage">
-            <div class="doc-card-header">
-              <div>
-                <h3 class="doc-card-title">Photos</h3>
-                <p class="doc-card-desc">Damage, scene or vehicle photos.</p>
-              </div>
-              <span class="status-pill action-needed" id="badgeDamage">Still needed</span>
+          <!-- Royal Square Insurance Matching -->
+          <div class="section-label">Royal Square Financial Claim Triage</div>
+          <div class="insurance-triage-card">
+            <div class="triage-item">
+              <span class="triage-label">Matched Insurance Product:</span>
+              <span id="insuranceCategoryValue" class="triage-badge product-badge">--</span>
             </div>
-            <div class="doc-actions-row">
-              <input type="file" id="fileDamage" accept="image/*" class="file-input-hidden">
-              <button type="button" class="btn btn-primary btn-sm" id="btnUploadDamage">Upload</button>
-              <button type="button" id="btnSampleDamage" class="btn btn-secondary btn-sm">Use sample</button>
+            <div class="triage-item">
+              <span class="triage-label">Policy Number:</span>
+              <span id="policyValue" class="triage-badge policy-badge">--</span>
             </div>
-            <div id="scanBoxDamage" class="scan-progress-box" hidden>
-              <div class="scan-status-text" id="scanTextDamage">Uploading…</div>
-              <div class="progress-bar-track"><div class="progress-bar-fill" id="scanFillDamage"></div></div>
-            </div>
-            <div id="previewDamage" class="doc-preview-box" hidden>
-              <img id="imgPreviewDamage" src="assets/damage_sample.jpg" alt="Vehicle damage" class="doc-thumb">
-              <div class="doc-meta">
-                <div class="doc-name" id="fileNameDamage">vehicle_damage.jpg</div>
-                <div class="doc-status-badge">Saved on this device</div>
-              </div>
-              <button type="button" id="btnRemoveDamage" class="btn btn-secondary btn-sm">Remove</button>
+            <div class="triage-item">
+              <span class="triage-label">Claim Classification:</span>
+              <span id="claimTypeValue" class="triage-val">--</span>
             </div>
           </div>
 
-          <div class="doc-upload-card" id="cardDocLicense">
-            <div class="doc-card-header">
-              <div>
-                <h3 class="doc-card-title">Vehicle documents</h3>
-                <p class="doc-card-desc">Licence disc, registration or licence card.</p>
-              </div>
-              <span class="status-pill review" id="badgeLicense">Optional</span>
+          <!-- Secondary Context Fields -->
+          <div class="section-label">Incident & Vehicular Details</div>
+          <div class="secondary-grid">
+            <div class="sub-card">
+              <span class="sub-label">Time & Location:</span>
+              <div id="timeLocValue" class="sub-val">--</div>
             </div>
-            <div class="doc-actions-row">
-              <input type="file" id="fileLicense" accept="image/*" class="file-input-hidden">
-              <button type="button" class="btn btn-secondary btn-sm" id="btnUploadLicense">Upload</button>
-              <button type="button" id="btnSampleLicense" class="btn btn-secondary btn-sm">Use sample</button>
+            <div class="sub-card">
+              <span class="sub-label">Vehicles Involved:</span>
+              <div id="vehiclesValue" class="sub-val">--</div>
             </div>
-            <div id="scanBoxLicense" class="scan-progress-box" hidden>
-              <div class="scan-status-text" id="scanTextLicense">Uploading…</div>
-              <div class="progress-bar-track"><div class="progress-bar-fill" id="scanFillLicense"></div></div>
+            <div class="sub-card full-width">
+              <span class="sub-label">Damages Summary:</span>
+              <div id="damagesValue" class="sub-val">--</div>
             </div>
-            <div id="previewLicense" class="doc-preview-box" hidden>
-              <div class="doc-thumb" style="background:#f3f3f3;display:grid;place-items:center;">DOC</div>
-              <div class="doc-meta">
-                <div class="doc-name" id="fileNameLicense">vehicle_licence.jpg</div>
-                <div class="doc-status-badge">Saved on this device</div>
-              </div>
-              <button type="button" id="btnRemoveLicense" class="btn btn-secondary btn-sm">Remove</button>
+            <div class="sub-card full-width">
+              <span class="sub-label">Accident Description:</span>
+              <div id="descValue" class="sub-val">--</div>
             </div>
           </div>
 
-          <div class="doc-upload-card" id="cardDocOther">
-            <div class="doc-card-header">
-              <div>
-                <h3 class="doc-card-title">Other supporting evidence</h3>
-                <p class="doc-card-desc">Anything else that helps explain what happened.</p>
-              </div>
-            </div>
-            <div class="doc-actions-row">
-              <input type="file" id="fileOther" accept="image/*,application/pdf" class="file-input-hidden">
-              <button type="button" class="btn btn-secondary btn-sm" id="btnUploadOther">Upload</button>
-            </div>
-            <div id="previewOther" class="doc-preview-box" hidden>
-              <div class="doc-meta">
-                <div class="doc-name" id="fileNameOther">supporting_file</div>
-                <div class="doc-status-badge">Saved on this device</div>
-              </div>
-              <button type="button" id="btnRemoveOther" class="btn btn-secondary btn-sm">Remove</button>
-            </div>
+          <!-- Warnings / Audit Box -->
+          <div id="warningsBox" class="warnings-box hidden">
+            <div class="warning-title">⚠️ Document Audit Flags</div>
+            <ul id="warningsList"></ul>
           </div>
 
-          <div class="form-nav-row">
-            <button type="button" id="btnStep2Back" class="btn btn-secondary">Back</button>
-            <button type="button" id="btnStep2Next" class="btn btn-primary">Continue</button>
+          <!-- Processing Meta Footer -->
+          <div class="meta-footer">
+            <span id="metaEngine">Engine: --</span>
+            <span id="metaTime">Processing Time: -- ms</span>
+            <span id="metaPages">Pages: --</span>
           </div>
-        </section>
+        </div>
 
-        <section id="step-3" class="panel" hidden aria-labelledby="step3Title">
-          <h2 id="step3Title" class="section-title">Step 3 — Review information</h2>
-          <p class="section-subtitle" style="margin-bottom: 0.85rem;">Correct anything that does not look right before you submit.</p>
+        <!-- Tab 2: Raw JSON View -->
+        <div id="jsonView" class="json-view hidden">
+          <div class="code-toolbar">
+            <span class="code-lang">JSON Output (Contract Verified)</span>
+            <button id="copyJsonBtn" class="copy-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy JSON
+            </button>
+          </div>
+          <pre><code id="jsonContent">// JSON output will appear here after extraction</code></pre>
+        </div>
 
-          <div class="review-card">
-            <div class="detected-flag">✓ Information detected</div>
-            <div class="review-row">
-              <div class="review-key">SAPS Case Number</div>
-              <div class="review-val"><input type="text" id="revCaseNumber" class="form-control" value="482/09/2026"></div>
-            </div>
-            <div class="review-row">
-              <div class="review-key">Police Station</div>
-              <div class="review-val"><input type="text" id="revStation" class="form-control" value="Cape Town Central"></div>
-            </div>
-            <div class="review-row">
-              <div class="review-key">Investigating Officer</div>
-              <div class="review-val"><input type="text" id="revOfficer" class="form-control" value="Sgt. Dlamini"></div>
-            </div>
+        <!-- Tab 3: Node.js Integration Snippet -->
+        <div id="integrationView" class="integration-view hidden">
+          <div class="code-toolbar">
+            <span class="code-lang">Node.js / Express Controller Snippet (Ready to Paste)</span>
+            <button id="copyCodeBtn" class="copy-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Code
+            </button>
           </div>
-
-          <div class="review-card">
-            <div class="review-card-header">
-              <h3 class="review-card-title">Accident details</h3>
-              <button type="button" id="btnEditStep1" class="btn btn-secondary btn-sm">Edit</button>
-            </div>
-            <div class="review-row"><div class="review-key">Date</div><div class="review-val" id="revDate">-</div></div>
-            <div class="review-row"><div class="review-key">Time</div><div class="review-val" id="revTime">-</div></div>
-            <div class="review-row"><div class="review-key">Location</div><div class="review-val" id="revLocation">-</div></div>
-            <div class="review-row"><div class="review-key">Vehicle registration</div><div class="review-val" id="revVehicle">-</div></div>
-            <div class="review-row"><div class="review-key">Description</div><div class="review-val" id="revDescription">-</div></div>
-          </div>
-
-          <div class="review-card">
-            <div class="review-card-header">
-              <h3 class="review-card-title">Documents</h3>
-              <button type="button" id="btnEditStep2" class="btn btn-secondary btn-sm">Edit</button>
-            </div>
-            <div class="review-row"><div class="review-key">Police documentation</div><div class="review-val" id="revDocPolice">Not uploaded</div></div>
-            <div class="review-row"><div class="review-key">Photos</div><div class="review-val" id="revDocDamage">Not uploaded</div></div>
-            <div class="review-row"><div class="review-key">Vehicle documents</div><div class="review-val" id="revDocLicense">None provided</div></div>
-            <div class="review-row"><div class="review-key">Other evidence</div><div class="review-val" id="revDocOther">None provided</div></div>
-          </div>
-
-          <div class="form-nav-row">
-            <button type="button" id="btnStep3Back" class="btn btn-secondary">Back</button>
-            <button type="button" id="btnSubmitClaim" class="btn btn-primary">Submit request</button>
-          </div>
-        </section>
-
-        <section id="step-4" class="panel confirmation-card" hidden aria-labelledby="step4Title">
-          <h2 id="step4Title" class="section-title">Claim status</h2>
-          <div class="ref-code-box">
-            <div class="form-hint">Claim number</div>
-            <div id="confirmedRefCode" class="ref-code">RS-1042</div>
-            <div id="confirmedOfflineBadge" class="status-pill waiting-sync" hidden>Saved on this device</div>
-          </div>
-          <div class="status-track" aria-label="Claim progress">
-            <span id="stSubmitted" class="current">Submitted</span>
-            <span id="stAssessment">Assessment</span>
-            <span id="stAuth">Awaiting Authorisation</span>
-            <span id="stDone">Completed</span>
-          </div>
-          <h3 class="section-title">What happens next?</h3>
-          <div class="timeline-list">
-            <div class="timeline-item">
-              <div class="timeline-step-num">1</div>
-              <div>
-                <strong>We have your report</strong>
-                <p class="section-subtitle">Your information is stored securely. If you were offline, it stays on this device until we can submit it.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-step-num">2</div>
-              <div>
-                <strong>Assessment</strong>
-                <p class="section-subtitle">A claims administrator checks the documents. You will hear from us if anything is missing.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-step-num">3</div>
-              <div>
-                <strong>Authorisation if needed</strong>
-                <p class="section-subtitle">An adviser steps in only when a human decision is required.</p>
-              </div>
-            </div>
-          </div>
-          <div class="form-nav-row">
-            <button type="button" id="btnFinishReturnHome" class="btn btn-secondary">Return to home</button>
-            <button type="button" id="btnPrintSummary" class="btn btn-primary">Save or print summary</button>
-          </div>
-        </section>
+          <pre><code id="integrationCode">// Node.js snippet for your teammates</code></pre>
+        </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div>
-          <p class="footer-brand">Royal Square Financial</p>
-          <p>Tell us what happened. We will guide the next step.</p>
-        </div>
-        <div>
-          <p>Roadside assistance: <button type="button" id="btnEmergencyCallFooter" class="emergency-btn-trigger">0800 00 1234</button></p>
-        </div>
-      </div>
-    </footer>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">Copied to clipboard!</div>
   </div>
 
-  <div id="callConfirmModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="callModalTitle">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h2 id="callModalTitle" class="modal-title">Call roadside assistance?</h2>
-        <button type="button" class="modal-close-btn" id="btnCloseCallConfirm" aria-label="Close">✕</button>
-      </div>
-      <p class="modal-body">This will open a call to 0800 00 1234. Use this if you need a tow or you are not safe to stay with the vehicle.</p>
-      <div style="display:flex;gap:0.5rem;justify-content:flex-end;flex-wrap:wrap;">
-        <button type="button" id="btnCancelCall" class="btn btn-secondary">Cancel</button>
-        <a href="tel:0800001234" id="btnProceedCall" class="btn btn-primary">Call 0800 00 1234</a>
-      </div>
-    </div>
-  </div>
-
-  <div id="errorModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalErrorTitle">
-    <div class="modal-card">
-      <h2 id="modalErrorTitle" class="modal-title">Something went wrong</h2>
-      <p id="modalErrorDesc" class="modal-body">Your information has been saved on this device. Please try again, or call us if you need help now.</p>
-      <button type="button" id="btnCloseModal" class="btn btn-primary">Close</button>
-    </div>
-  </div>
-
-  <script src="i18n.js"></script>
-  <script src="app.js"></script>
+  <script src="/static/app.js"></script>
 </body>
 </html>
