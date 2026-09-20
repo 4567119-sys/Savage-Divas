@@ -1,0 +1,18 @@
+{
+  "name": "Royal Square Financial",
+  "short_name": "Royal Square",
+  "description": "Royal Square Financial client services and requests.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f2",
+  "theme_color": "#c8102e",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

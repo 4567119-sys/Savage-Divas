@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Royal Square Financial - Adviser Review: RS-1042">
+  <title>Adviser Review: RS-1042 | Royal Square Financial</title>
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Shared Stylesheet -->
+  <link rel="stylesheet" href="css/adviser-dashboard.css">
+
+  <style>
+    /* ========================================================================
+       Page 6: Adviser Review / Case Action — Additional Styles
+       ======================================================================== */
+
+    /* Automation / Adviser split banner */
+    .automation-philosophy-banner {
+      background: linear-gradient(135deg, var(--rs-navy-950) 0%, var(--rs-navy-800) 100%);
+      border-radius: var(--radius-lg);
+      padding: 22px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 24px rgba(7, 14, 24, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .automation-philosophy-banner::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -30px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .philosophy-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--rs-gold-500), var(--rs-gold-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+    }
+
+    .philosophy-icon svg {
+      width: 26px;
+      height: 26px;
+      color: var(--rs-navy-950);
+    }
+
+    .philosophy-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .philosophy-headline {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .philosophy-headline em {
+      font-style: normal;
+      color: var(--rs-gold-400);
+    }
+
+    .philosophy-sub {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.65);
+      font-weight: 400;
+    }
+
+    /* Case identification header */
+    .review-case-header {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 22px 28px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .review-case-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .review-case-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rs-navy-700), var(--rs-blue-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 18px;
+      border: 2.5px solid var(--rs-gold-400);
+      flex-shrink: 0;
+    }
+
+    .review-case-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .review-claim-id {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--rs-navy-900);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .review-case-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Why review needed block */
+    .why-review-card {
+      background: linear-gradient(135deg, #fff6f6 0%, #fff0f0 100%);
+      border: 1.5px solid var(--danger-500);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+    }
+
+    .why-review-heading {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--danger-700);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .why-review-heading svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .why-review-reason {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--slate-800);
+      line-height: 1.5;
+    }
+
+    /* Two-column body layout */
+    .review-body-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1000px) {
+      .review-body-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Automation completed card */
+    .automation-completed-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .automation-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--slate-100);
+    }
+
+    .automation-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--success-50);
+      color: var(--success-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .automation-card-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .automation-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .automation-card-subtitle {
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-top: 1px;
+    }
+
+    .automation-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .automation-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: var(--success-50);
+      border: 1px solid rgba(34, 197, 94, 0.15);
+    }
+
+    .automation-step-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--success-500);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .automation-step-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--success-700);
+      flex: 1;
+    }
+
+    .automation-step-time {
+      font-size: 11px;
+      color: var(--slate-400);
+    }
+
+    .automation-footer-note {
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      font-size: 12.5px;
+      color: var(--slate-600);
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .automation-footer-note svg {
+      width: 14px;
+      height: 14px;
+      color: var(--rs-gold-600);
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    /* Adviser Decision card */
+    .adviser-decision-card {
+      background: var(--white);
+      border: 1.5px solid var(--rs-navy-800);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 24px rgba(7, 14, 24, 0.12);
+      overflow: hidden;
+    }
+
+    .adviser-decision-header {
+      background: linear-gradient(135deg, var(--rs-navy-950) 0%, var(--rs-navy-800) 100%);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .adviser-decision-header-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .adviser-decision-header-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--rs-gold-400);
+    }
+
+    .adviser-decision-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+
+    .adviser-decision-subheading {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 2px;
+    }
+
+    .adviser-decision-body {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-decision-primary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      background: var(--rs-navy-950);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-decision-primary:hover {
+      background: var(--rs-navy-800);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-decision-primary svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .btn-decision-secondary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 20px;
+      background: var(--white);
+      color: var(--slate-800);
+      border: 1.5px solid var(--slate-300);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-decision-secondary:hover {
+      border-color: var(--rs-navy-800);
+      color: var(--rs-navy-800);
+      background: var(--slate-50);
+    }
+
+    .btn-decision-secondary svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .btn-decision-resolved {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 20px;
+      background: var(--success-500);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-decision-resolved:hover {
+      background: var(--success-700);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-decision-resolved svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .adviser-decision-divider {
+      height: 1px;
+      background: var(--slate-100);
+      margin: 4px 0;
+    }
+
+    /* Context note at bottom */
+    .exception-context-note {
+      background: linear-gradient(135deg, #f0f4ff 0%, #f5f0ff 100%);
+      border: 1.5px solid #c7d7fd;
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .exception-context-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+    }
+
+    .exception-context-icon svg {
+      width: 18px;
+      height: 18px;
+      color: white;
+    }
+
+    .exception-context-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .exception-context-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #4f46e5;
+    }
+
+    .exception-context-body {
+      font-size: 13px;
+      color: var(--slate-600);
+      line-height: 1.6;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate-600);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
+      background: var(--white);
+      transition: all var(--transition-fast);
+    }
+
+    .back-link:hover {
+      color: var(--rs-navy-800);
+      border-color: var(--slate-300);
+      background: var(--slate-50);
+    }
+
+    .back-link svg {
+      width: 15px;
+      height: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         LEFT SIDEBAR
+         ==================================================================== -->
+    <aside class="sidebar" id="adviserSidebar">
+      <div class="sidebar-brand">
+        <a href="adviser-dashboard.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+          <div class="brand-crest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <path d="M12 8v8"></path>
+              <path d="M8 12h8"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Royal Square</span>
+            <span class="brand-subtitle">Financial Services</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Main Navigation</span>
+
+        <a href="adviser-dashboard.html" class="nav-item" id="navDashboard" title="Dashboard">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </span>
+            <span class="nav-item-title">Dashboard</span>
+          </div>
+        </a>
+
+        <!-- Cases ACTIVE (review is under cases context) -->
+        <a href="cases.html" class="nav-item active" id="navCases" title="Cases">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Cases</span>
+          </div>
+          <span class="nav-badge">127</span>
+        </a>
+
+        <a href="notifications.html" class="nav-item" id="navNotifications" title="Notifications">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Notifications</span>
+          </div>
+          <span class="nav-badge alert">3</span>
+        </a>
+
+        <a href="settings.html" class="nav-item" id="navSettings" title="Settings">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Settings</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="adviser-profile-card">
+          <div class="adviser-avatar-wrap">
+            <div class="avatar-fallback">SA</div>
+            <span class="status-indicator"></span>
+          </div>
+          <div class="adviser-info">
+            <span class="adviser-name">Sarah Adams</span>
+            <span class="adviser-role">Financial Adviser</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN CONTENT AREA
+         ==================================================================== -->
+    <main class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-greeting-wrap">
+          <h1 class="header-title">Adviser Review: RS-1042</h1>
+          <p class="header-subtitle">Automation escalated this exception — your decision is required.</p>
+        </div>
+        <div class="header-actions">
+          <a href="claim-details.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            View Full Claim
+          </a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="dashboard-content">
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumbs-bar" aria-label="Breadcrumb">
+          <a href="adviser-dashboard.html" class="breadcrumb-link">Dashboard</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="cases.html" class="breadcrumb-link">Cases</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="claim-details.html" class="breadcrumb-link">RS-1042</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-current">Adviser Review</span>
+        </nav>
+
+        <!-- ================================================================
+             AUTOMATION PHILOSOPHY BANNER
+             ================================================================ -->
+        <div class="automation-philosophy-banner" role="banner">
+          <div class="philosophy-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="philosophy-text">
+            <div class="philosophy-headline">
+              Automation handles routine work. <em>Advisers handle exceptions.</em>
+            </div>
+            <div class="philosophy-sub">
+              The automated workflow completed all standard steps. It escalated this case because it encountered an exception it cannot resolve. Your judgement is now required.
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             CASE IDENTIFICATION HEADER
+             ================================================================ -->
+        <div class="review-case-header">
+          <div class="review-case-left">
+            <div class="review-case-avatar">TM</div>
+            <div class="review-case-info">
+              <div class="review-claim-id">RS-1042</div>
+              <div class="review-case-meta">
+                <span class="claim-type-pill">Thandi M.</span>
+                <span class="claim-type-pill">Accident Claim</span>
+                <span class="status-badge danger">Adviser Review Required</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             WHY REVIEW NEEDED
+             ================================================================ -->
+        <div class="why-review-card" role="alert">
+          <div class="why-review-heading">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            Why This Needs Adviser Review
+          </div>
+          <p class="why-review-reason">
+            Insurer response exceeded the SLA after automated follow-ups. Discovery Insure did not respond within the required 48-hour turnaround window, and two automated escalation messages went unanswered. Automation cannot resolve this — it requires direct adviser intervention.
+          </p>
+        </div>
+
+        <!-- ================================================================
+             TWO-COLUMN: AUTOMATION COMPLETED + ADVISER DECISION
+             ================================================================ -->
+        <div class="review-body-grid">
+
+          <!-- LEFT: Automation Completed -->
+          <div class="automation-completed-card" aria-labelledby="automationCompletedTitle">
+            <div class="automation-card-header">
+              <div class="automation-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="13 17 18 12 13 7"></polyline>
+                  <polyline points="6 17 11 12 6 7"></polyline>
+                </svg>
+              </div>
+              <div>
+                <div class="automation-card-title" id="automationCompletedTitle">Automation Completed</div>
+                <div class="automation-card-subtitle">These steps ran automatically — no adviser input needed</div>
+              </div>
+            </div>
+
+            <div class="automation-steps-list" role="list">
+              <div class="automation-step" role="listitem">
+                <div class="automation-step-check">✓</div>
+                <span class="automation-step-label">Documents collected</span>
+                <span class="automation-step-time">18 Sep 10:25</span>
+              </div>
+              <div class="automation-step" role="listitem">
+                <div class="automation-step-check">✓</div>
+                <span class="automation-step-label">Documents verified</span>
+                <span class="automation-step-time">18 Sep 10:25</span>
+              </div>
+              <div class="automation-step" role="listitem">
+                <div class="automation-step-check">✓</div>
+                <span class="automation-step-label">Claim submitted</span>
+                <span class="automation-step-time">18 Sep 10:30</span>
+              </div>
+              <div class="automation-step" role="listitem">
+                <div class="automation-step-check">✓</div>
+                <span class="automation-step-label">Insurer follow-up sent</span>
+                <span class="automation-step-time">21 Sep 10:30</span>
+              </div>
+              <div class="automation-step" role="listitem">
+                <div class="automation-step-check">✓</div>
+                <span class="automation-step-label">SLA monitored</span>
+                <span class="automation-step-time">21 Sep 10:30</span>
+              </div>
+              <div class="automation-step" role="listitem">
+                <div class="automation-step-check">✓</div>
+                <span class="automation-step-label">Case escalated automatically</span>
+                <span class="automation-step-time">21 Sep 10:31</span>
+              </div>
+            </div>
+
+            <div class="automation-footer-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>
+                Automation completed all 6 standard workflow steps without error. Escalation was triggered by the insurer SLA breach — an exception outside the automated workflow's authority to resolve.
+              </span>
+            </div>
+          </div>
+
+          <!-- RIGHT: Adviser Decision -->
+          <div>
+            <div class="adviser-decision-card" aria-labelledby="adviserDecisionTitle">
+              <div class="adviser-decision-header">
+                <div class="adviser-decision-header-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="adviser-decision-heading" id="adviserDecisionTitle">Adviser Decision</div>
+                  <div class="adviser-decision-subheading">Select an action to proceed with this exception</div>
+                </div>
+              </div>
+
+              <div class="adviser-decision-body">
+
+                <button class="btn-decision-primary" id="btnDecisionContactInsurer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15v1.92z"></path>
+                  </svg>
+                  Contact Insurer
+                </button>
+
+                <div class="adviser-decision-divider"></div>
+
+                <button class="btn-decision-secondary" id="btnDecisionRequestInfo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                  </svg>
+                  Request Additional Information
+                </button>
+
+                <button class="btn-decision-secondary" id="btnDecisionUpdateClient">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  Update Client
+                </button>
+
+                <div class="adviser-decision-divider"></div>
+
+                <button class="btn-decision-resolved" id="btnDecisionMarkResolved">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Mark as Resolved
+                </button>
+
+              </div>
+            </div>
+
+            <!-- Context note -->
+            <div class="exception-context-note" style="margin-top:20px;">
+              <div class="exception-context-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div class="exception-context-text">
+                <div class="exception-context-title">AI-Assisted Context</div>
+                <p class="exception-context-body">
+                  Based on claim history, similar insurer SLA breaches were resolved within 24 hours via direct adviser contact. Recommended action: <strong>Contact Insurer</strong> with reference DIS-992014-ZA.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- / review-body-grid -->
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="actionToast" role="status" aria-live="polite">
+    <div class="toast-indicator"></div>
+    <div class="toast-text-wrap">
+      <span class="toast-title" id="toastTitle">Action</span>
+      <span class="toast-sub" id="toastSub">Recorded</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toast = document.getElementById('actionToast');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastSub = document.getElementById('toastSub');
+
+      function showToast(title, sub) {
+        toastTitle.textContent = title;
+        toastSub.textContent = sub;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      document.getElementById('btnDecisionContactInsurer')?.addEventListener('click', () => {
+        showToast('Insurer Contacted', 'Priority call logged to Discovery Insure — ref DIS-992014-ZA');
+      });
+      document.getElementById('btnDecisionRequestInfo')?.addEventListener('click', () => {
+        showToast('Info Requested', 'Additional information request sent to relevant parties');
+      });
+      document.getElementById('btnDecisionUpdateClient')?.addEventListener('click', () => {
+        showToast('Client Updated', 'Status update sent to Thandi M. via email');
+      });
+      document.getElementById('btnDecisionMarkResolved')?.addEventListener('click', () => {
+        showToast('Case Resolved', 'RS-1042 marked as resolved. Returning to normal workflow.');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Royal Square Financial - Notifications">
+  <title>Notifications | Royal Square Financial</title>
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Shared Stylesheet -->
+  <link rel="stylesheet" href="css/adviser-dashboard.css">
+
+  <style>
+    /* ========================================================================
+       Page 4: Notifications — Additional Styles
+       ======================================================================== */
+
+    .notif-page-section-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--slate-500);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notif-page-section-label span.count-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: var(--radius-full);
+      background: var(--danger-100);
+      color: var(--danger-700);
+    }
+
+    .notif-page-section-label span.count-chip.muted {
+      background: var(--slate-100);
+      color: var(--slate-600);
+    }
+
+    /* Full-page notification card */
+    .notif-full-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notif-full-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .notif-full-card.unread::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+
+    .notif-full-card.unread.danger::before { background: var(--danger-500); }
+    .notif-full-card.unread.warning::before { background: var(--warning-500); }
+    .notif-full-card.unread.info::before { background: var(--rs-blue-500); }
+    .notif-full-card.unread.success::before { background: var(--success-500); }
+
+    .notif-card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .notif-card-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .notif-card-icon.danger {
+      background: var(--danger-100);
+      color: var(--danger-700);
+    }
+
+    .notif-card-icon.warning {
+      background: var(--warning-100);
+      color: var(--warning-700);
+    }
+
+    .notif-card-icon.info {
+      background: var(--info-100);
+      color: var(--info-700);
+    }
+
+    .notif-card-icon.success {
+      background: var(--success-100);
+      color: var(--success-700);
+    }
+
+    .notif-card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .notif-card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .notif-card-type-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .notif-card-type-badge.danger {
+      background: var(--danger-100);
+      color: var(--danger-700);
+    }
+
+    .notif-card-type-badge.warning {
+      background: var(--warning-100);
+      color: var(--warning-700);
+    }
+
+    .notif-card-type-badge.info {
+      background: var(--info-100);
+      color: var(--info-700);
+    }
+
+    .notif-card-type-badge.success {
+      background: var(--success-100);
+      color: var(--success-700);
+    }
+
+    .notif-card-time {
+      font-size: 12px;
+      color: var(--slate-400);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .notif-card-message {
+      font-size: 14px;
+      color: var(--slate-700);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .notif-card-message strong {
+      color: var(--slate-900);
+      font-weight: 700;
+    }
+
+    .notif-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-notif-view {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: var(--radius-md);
+      background: var(--rs-navy-950);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .btn-notif-view:hover {
+      background: var(--rs-navy-800);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-notif-view svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .btn-mark-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--slate-500);
+      border: 1px solid var(--slate-200);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .btn-mark-read:hover {
+      background: var(--slate-50);
+      color: var(--slate-700);
+      border-color: var(--slate-300);
+    }
+
+    .notif-full-card.is-read {
+      opacity: 0.65;
+    }
+
+    .notif-full-card.is-read::before {
+      display: none;
+    }
+
+    /* Top bar: mark all as read */
+    .notif-page-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .btn-mark-all-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--rs-blue-600);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      transition: background var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .btn-mark-all-read:hover {
+      background: var(--info-50);
+    }
+
+    .notif-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-divider {
+      margin: 8px 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         LEFT SIDEBAR
+         ==================================================================== -->
+    <aside class="sidebar" id="adviserSidebar">
+      <div class="sidebar-brand">
+        <a href="adviser-dashboard.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+          <div class="brand-crest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <path d="M12 8v8"></path>
+              <path d="M8 12h8"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Royal Square</span>
+            <span class="brand-subtitle">Financial Services</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Main Navigation</span>
+
+        <a href="adviser-dashboard.html" class="nav-item" id="navDashboard" title="Dashboard">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </span>
+            <span class="nav-item-title">Dashboard</span>
+          </div>
+        </a>
+
+        <a href="cases.html" class="nav-item" id="navCases" title="Cases">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Cases</span>
+          </div>
+          <span class="nav-badge">127</span>
+        </a>
+
+        <!-- Notifications ACTIVE -->
+        <a href="notifications.html" class="nav-item active" id="navNotifications" title="Notifications">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Notifications</span>
+          </div>
+          <span class="nav-badge alert" id="notifNavBadge">3</span>
+        </a>
+
+        <a href="settings.html" class="nav-item" id="navSettings" title="Settings">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Settings</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="adviser-profile-card">
+          <div class="adviser-avatar-wrap">
+            <div class="avatar-fallback">SA</div>
+            <span class="status-indicator"></span>
+          </div>
+          <div class="adviser-info">
+            <span class="adviser-name">Sarah Adams</span>
+            <span class="adviser-role">Financial Adviser</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN CONTENT AREA
+         ==================================================================== -->
+    <main class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-greeting-wrap">
+          <h1 class="header-title">Notifications</h1>
+          <p class="header-subtitle">Important updates from automated workflows.</p>
+        </div>
+        <div class="header-actions">
+          <div class="header-date-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>19 Sep 2026</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Notifications Content -->
+      <div class="dashboard-content">
+
+        <!-- Top action bar -->
+        <div class="notif-page-top-bar">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="panel-count-pill alert" id="unreadCountPill">3 unread</span>
+            <span class="panel-count-pill" style="color:var(--slate-500)">4 total</span>
+          </div>
+          <button class="btn-mark-all-read" id="btnMarkAllRead">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Mark all as read
+          </button>
+        </div>
+
+        <!-- ================================================================
+             SECTION: REQUIRES ATTENTION
+             ================================================================ -->
+        <div class="section-divider">
+          <div class="notif-page-section-label">
+            Requires Adviser Attention
+            <span class="count-chip" id="attentionCount">3</span>
+          </div>
+
+          <div class="notif-cards-stack">
+
+            <!-- Notification 1: Adviser Review Required -->
+            <div class="notif-full-card unread danger" id="notif-1" data-unread="true">
+              <div class="notif-card-icon danger">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+              <div class="notif-card-body">
+                <div class="notif-card-header-row">
+                  <span class="notif-card-type-badge danger">Adviser Review Required</span>
+                  <span class="notif-card-time">2 minutes ago</span>
+                </div>
+                <p class="notif-card-message"><strong>RS-1042</strong> insurer response is overdue.</p>
+                <div class="notif-card-actions">
+                  <a href="claim-details.html" class="btn-notif-view">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    View Case
+                  </a>
+                  <button class="btn-mark-read" data-target="notif-1">Mark as Read</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notification 2: Client Information Required -->
+            <div class="notif-full-card unread warning" id="notif-2" data-unread="true">
+              <div class="notif-card-icon warning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="notif-card-body">
+                <div class="notif-card-header-row">
+                  <span class="notif-card-type-badge warning">Client Information Required</span>
+                  <span class="notif-card-time">15 minutes ago</span>
+                </div>
+                <p class="notif-card-message"><strong>RS-1038</strong> is missing a police case number.</p>
+                <div class="notif-card-actions">
+                  <a href="cases.html" class="btn-notif-view">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    View Case
+                  </a>
+                  <button class="btn-mark-read" data-target="notif-2">Mark as Read</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notification 3: Document Review Required -->
+            <div class="notif-full-card unread info" id="notif-3" data-unread="true">
+              <div class="notif-card-icon info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div class="notif-card-body">
+                <div class="notif-card-header-row">
+                  <span class="notif-card-type-badge info">Document Review Required</span>
+                  <span class="notif-card-time">1 hour ago</span>
+                </div>
+                <p class="notif-card-message"><strong>RS-1029</strong> contains a document that needs adviser review.</p>
+                <div class="notif-card-actions">
+                  <a href="cases.html" class="btn-notif-view">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    View Case
+                  </a>
+                  <button class="btn-mark-read" data-target="notif-3">Mark as Read</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================================================================
+             SECTION: AUTOMATED UPDATES (no action needed)
+             ================================================================ -->
+        <div class="section-divider" style="margin-top:24px;">
+          <div class="notif-page-section-label">
+            Automated Updates
+            <span class="count-chip muted">1</span>
+          </div>
+
+          <div class="notif-cards-stack">
+
+            <!-- Notification 4: Automated Progress -->
+            <div class="notif-full-card" id="notif-4" data-unread="false">
+              <div class="notif-card-icon success">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="notif-card-body">
+                <div class="notif-card-header-row">
+                  <span class="notif-card-type-badge success">Automated Progress Update</span>
+                  <span class="notif-card-time">2 hours ago</span>
+                </div>
+                <p class="notif-card-message"><strong>RS-1035</strong> automatically progressed to insurer review.</p>
+                <div class="notif-card-actions">
+                  <a href="cases.html" class="btn-notif-view" style="background:var(--rs-navy-700);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    View Case
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="actionToast" role="status" aria-live="polite">
+    <div class="toast-indicator"></div>
+    <div class="toast-text-wrap">
+      <span class="toast-title" id="toastTitle">Notification</span>
+      <span class="toast-sub" id="toastSub">Marked as read</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toast = document.getElementById('actionToast');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastSub = document.getElementById('toastSub');
+      const unreadCountPill = document.getElementById('unreadCountPill');
+      const attentionCount = document.getElementById('attentionCount');
+      const notifNavBadge = document.getElementById('notifNavBadge');
+
+      let unreadCount = 3;
+
+      function showToast(title, sub) {
+        toastTitle.textContent = title;
+        toastSub.textContent = sub;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      function updateCounts() {
+        if (unreadCount <= 0) {
+          unreadCountPill.textContent = 'All read';
+          unreadCountPill.classList.remove('alert');
+          notifNavBadge.style.display = 'none';
+        } else {
+          unreadCountPill.textContent = unreadCount + ' unread';
+          notifNavBadge.textContent = unreadCount;
+        }
+        attentionCount.textContent = Math.max(0, unreadCount);
+      }
+
+      function markAsRead(card) {
+        if (card.dataset.unread === 'true') {
+          card.dataset.unread = 'false';
+          card.classList.add('is-read');
+          card.classList.remove('unread');
+          // Remove the left color border
+          ['danger', 'warning', 'info', 'success'].forEach(c => {
+            if (card.classList.contains(c)) card.classList.remove(c);
+          });
+          unreadCount = Math.max(0, unreadCount - 1);
+          updateCounts();
+          showToast('Marked as Read', 'Notification dismissed');
+        }
+      }
+
+      // Individual mark-as-read buttons
+      document.querySelectorAll('.btn-mark-read').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = btn.dataset.target;
+          const card = document.getElementById(targetId);
+          if (card) markAsRead(card);
+        });
+      });
+
+      // Mark all as read
+      document.getElementById('btnMarkAllRead')?.addEventListener('click', () => {
+        document.querySelectorAll('.notif-full-card[data-unread="true"]').forEach(card => {
+          markAsRead(card);
+        });
+        showToast('All Read', 'All notifications have been cleared');
+      });
+    });
+  </script>
+
+</body>
+</html>

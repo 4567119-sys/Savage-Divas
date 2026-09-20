@@ -1,0 +1,16 @@
+{
+  "name": "Royal Square Financial",
+  "short_name": "Royal Square",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f4f2",
+  "theme_color": "#111111",
+  "description": "Royal Square Financial client demo with offline claim capture.",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

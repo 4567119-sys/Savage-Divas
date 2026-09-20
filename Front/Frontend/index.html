@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Square Financial</title>
+  <meta name="description" content="Royal Square Financial — secure access to financial services, requests and claims.">
+  <meta name="theme-color" content="#c8102e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- WELCOME / LOGIN CHOICE -->
+  <section id="view-welcome" class="welcome-screen" aria-labelledby="welcomeHeading">
+    <div class="welcome-card">
+      <img src="assets/logo.svg" alt="Royal Square Financial" class="welcome-logo">
+      <h1 id="welcomeHeading" class="welcome-title" data-i18n="authTitle">Welcome to Royal Square Financial</h1>
+      <p class="welcome-sub" data-i18n="authSubtitle">Secure access to your financial services and requests.</p>
+
+      <div class="welcome-choice">
+        <p class="welcome-question" data-i18n="loginChoicePrompt">Would you like to log in?</p>
+        <button type="button" id="btnOpenLogin" class="btn btn-primary btn-block" data-i18n="signInBtn">Sign In</button>
+      </div>
+
+      <div class="welcome-accessibility">
+        <div class="welcome-setting">
+          <label for="welcomeLangSelect" class="form-label" data-i18n="languageLabel">Language</label>
+          <select id="welcomeLangSelect" class="lang-select" aria-label="Language">
+            <option value="en">English</option>
+            <option value="zu">isiZulu</option>
+            <option value="xh">isiXhosa</option>
+            <option value="af">Afrikaans</option>
+            <option value="st">Sesotho</option>
+            <option value="tn">Setswana</option>
+            <option value="ts">isiTsonga</option>
+            <option value="ss">siSwati</option>
+            <option value="ve">Tshivenda</option>
+            <option value="nr">isiNdebele</option>
+            <option value="nso">Sepedi</option>
+          </select>
+        </div>
+        <button type="button" id="btnWelcomeVoice" class="voice-read-btn" aria-label="Read this page aloud">🔊 <span data-i18n="readAloud">Read Aloud</span></button>
+      </div>
+      <p class="voice-note" data-i18n="voiceDemoNote">Voice uses the language and voices available on this device.</p>
+    </div>
+  </section>
+
+  <!-- LOGIN -->
+  <section id="view-login" class="login-screen" aria-labelledby="loginHeading" hidden>
+    <div class="login-card">
+      <img src="assets/logo.svg" alt="Royal Square Financial" class="login-logo">
+      <h1 id="loginHeading" class="login-title" data-i18n="authTitle">Welcome to Royal Square Financial</h1>
+      <p class="login-sub" data-i18n="authSubtitle">Secure access to your financial services and requests.</p>
+      <div class="login-top-tools">
+        <button type="button" id="btnBackToWelcome" class="btn btn-secondary btn-sm" data-i18n="backBtn">Back</button>
+        <button type="button" id="btnLoginVoice" class="voice-read-btn" data-i18n="readAloud">🔊 Read Aloud</button>
+      </div>
+
+      <div class="segmented" role="tablist" aria-label="Identification method">
+        <button type="button" id="idMethodSa" role="tab" aria-pressed="true" data-i18n="labelSaIdNumber">South African ID Number</button>
+        <button type="button" id="idMethodPassport" role="tab" aria-pressed="false" data-i18n="labelPassportNumber">Passport Number</button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div id="saIdGroup" class="form-group">
+          <label for="loginSaId" class="form-label" data-i18n="labelSaIdNumber">South African ID Number</label>
+          <span class="form-hint" data-i18n="id13Hint">Enter your 13-digit ID number</span>
+          <input type="text" id="loginSaId" class="form-control" inputmode="numeric" maxlength="13" placeholder="8001015009087" autocomplete="off" aria-describedby="saIdError">
+          <p id="saIdError" class="field-error" role="alert" data-i18n="idError">Please enter a valid 13-digit South African ID number. Use numbers only.</p>
+        </div>
+
+        <div id="passportGroup" class="form-group" hidden>
+          <label for="loginPassport" class="form-label" data-i18n="labelPassportNumber">Passport Number</label>
+          <span class="form-hint" data-i18n="passportHint">Enter your passport number</span>
+          <input type="text" id="loginPassport" class="form-control" maxlength="6" placeholder="AB1234" autocomplete="off" aria-describedby="passportError">
+          <p id="passportError" class="field-error" role="alert" data-i18n="passportError">Use 2 letters followed by 4 numbers, for example AB1234.</p>
+        </div>
+
+        <button type="submit" id="btnContinueLogin" class="btn btn-primary btn-block" data-i18n="continueBtn">Continue</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- AUTHENTICATED APP -->
+  <div id="app-shell" class="app-shell" hidden>
+    <header class="site-header header-relative">
+      <div class="header-container">
+        <a href="#" id="brandLogoLink" class="brand-wrapper" aria-label="Royal Square Financial home">
+          <img src="assets/logo.svg" alt="" class="brand-logo">
+          <div>
+            <div class="brand-title">Royal Square Financial</div>
+            <p class="brand-subtitle">Client services</p>
+          </div>
+        </a>
+        <div class="header-tools">
+          <div id="networkBadge" class="network-badge online" role="status">
+            <span id="networkIcon" aria-hidden="true">●</span>
+            <span id="networkStatusText" data-i18n="statusOnline">Online</span>
+          </div>
+          <div class="header-language">
+            <label for="mainLangSelect" class="sr-only" data-i18n="languageLabel">Language</label>
+            <select id="mainLangSelect" class="lang-select lang-select-header" aria-label="Language">
+              <option value="en">English</option>
+              <option value="zu">isiZulu</option>
+              <option value="xh">isiXhosa</option>
+              <option value="af">Afrikaans</option>
+              <option value="st">Sesotho</option>
+              <option value="tn">Setswana</option>
+              <option value="ts">isiTsonga</option>
+              <option value="ss">siSwati</option>
+              <option value="ve">Tshivenda</option>
+              <option value="nr">isiNdebele</option>
+              <option value="nso">Sepedi</option>
+            </select>
+          </div>
+          <button type="button" id="btnVoiceMenu" class="icon-btn" aria-expanded="false" aria-controls="voicePanel">
+            🔊 <span data-i18n="voiceMenuTitle">Voice</span>
+          </button>
+          <button type="button" id="btnUserAuth" class="icon-btn">
+            <span id="userAuthLabel" data-i18n="accountTitle">Account</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="voicePanel" class="voice-panel" hidden>
+        <h3 data-i18n="voiceMenuTitle">Voice</h3>
+        <button type="button" class="voice-option selected" data-voice="1">
+          Voice 1
+          <small>Natural female voice</small>
+        </button>
+        <button type="button" class="voice-option" data-voice="2">
+          Voice 2
+          <small>Natural male voice</small>
+        </button>
+        <button type="button" class="voice-option" data-voice="3">
+          Voice 3
+          <small>Alternative female voice</small>
+        </button>
+        <button type="button" class="voice-option" data-voice="4">
+          Voice 4
+          <small>Alternative male voice</small>
+        </button>
+        <button type="button" id="btnReadAloud" class="btn btn-secondary btn-block btn-sm" style="margin-top: 0.65rem;">
+          🔊 Read Aloud
+        </button>
+      </div>
+
+      <nav class="site-nav" aria-label="Primary">
+        <div class="nav-inner">
+          <button type="button" class="nav-link" data-nav="home" aria-current="page" data-i18n="navHome">Home</button>
+          <button type="button" class="nav-link" data-nav="requests" data-i18n="navRequests">My Requests</button>
+          <button type="button" class="nav-link" data-nav="goals" data-i18n="navGoals">Goals</button>
+          <button type="button" class="nav-link" data-nav="messages" data-i18n="navMessages">Messages</button>
+          <button type="button" class="nav-link" data-nav="settings" data-i18n="navSettings">Settings</button>
+        </div>
+      </nav>
+    </header>
+
+    <div id="notificationsRegion" aria-live="assertive" role="region" aria-label="Alerts">
+      <div id="offlineNotice" class="notice-banner offline" style="display: none;">
+        <div class="notice-content">
+          <div>
+            <div class="notice-title">🟠 You're offline</div>
+            <div class="notice-body">You can still start a request. It will be saved on this device until you are back online.</div>
+          </div>
+        </div>
+      </div>
+      <div id="onlineSyncNotice" class="notice-banner online-sync" style="display: none;">
+        <div class="notice-content">
+          <div>
+            <div class="notice-title">🟢 Connection restored</div>
+            <div class="notice-body"><span id="pendingCount">1</span> request is ready to submit.</div>
+          </div>
+        </div>
+        <button id="btnSyncNow" class="btn btn-success btn-sm" type="button">Sync Request</button>
+      </div>
+    </div>
+
+    <main id="main-content" class="main-wrapper" tabindex="-1">
+
+      <section id="view-home" class="app-view">
+        <div class="home-block">
+          <h1 class="page-title" data-i18n="attentionTitle">What needs my attention?</h1>
+          <p class="page-lead" data-i18n="attentionLead">We will tell you plainly if something needs a response. You do not need to know which form to use.</p>
+          <div class="attention-list">
+            <article class="attention-card action">
+              <div>
+                <div class="card-kicker" data-i18n="actionRequired">Action required</div>
+                <p class="card-copy" data-i18n="missingPoliceDocs">Upload missing police documentation for Claim #RS-1042.</p>
+              </div>
+              <button type="button" id="btnContinueClaim1042" class="btn btn-primary btn-sm">Continue</button>
+            </article>
+            <article class="attention-card upcoming">
+              <div>
+                <div class="card-kicker" data-i18n="upcoming">Upcoming</div>
+                <p class="card-copy" data-i18n="annualReviewDue">Your annual financial review is due.</p>
+              </div>
+              <button type="button" id="btnScheduleReview" class="btn btn-secondary btn-sm" data-i18n="scheduleReview">Schedule Review</button>
+            </article>
+            <article class="attention-card ok">
+              <div>
+                <div class="card-kicker" data-i18n="noActionRequired">No action required</div>
+                <p class="card-copy" data-i18n="investmentUpdateReceived">Your investment update has been received.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="home-block request-choice-block">
+          <h2 class="page-title" data-i18n="heroHeadline">What would you like to report or do?</h2>
+          <p class="page-lead" data-i18n="heroSubhead">Tell us what happened and we'll guide you through the next steps.</p>
+          <div class="request-grid">
+            <button type="button" class="request-card" data-request="accident">
+              <span class="request-mark" aria-hidden="true">🚗</span>
+              <span>
+                <h3 data-i18n="reportAccidentCardTitle">I had an accident</h3>
+                <p data-i18n="reportAccidentCardDesc">Report a vehicle accident and start a claim.</p>
+              </span>
+            </button>
+            <button type="button" class="request-card" data-request="document">
+              <span class="request-mark" aria-hidden="true">📄</span>
+              <span>
+                <h3 data-i18n="requestDocumentTitle">I need a document</h3>
+                <p data-i18n="requestDocumentDesc">Statements, policy documents or certificates.</p>
+              </span>
+            </button>
+            <button type="button" class="request-card" data-request="renewal">
+              <span class="request-mark" aria-hidden="true">🔄</span>
+              <span>
+                <h3 data-i18n="requestRenewalTitle">I need to renew something</h3>
+                <p data-i18n="requestRenewalDesc">Insurance, policy or document renewals.</p>
+              </span>
+            </button>
+            <button type="button" class="request-card" data-request="details">
+              <span class="request-mark" aria-hidden="true">🏠</span>
+              <span>
+                <h3 data-i18n="requestDetailsTitle">I need to update my details</h3>
+                <p data-i18n="requestDetailsDesc">Personal or contact information changes.</p>
+              </span>
+            </button>
+            <button type="button" class="request-card" data-request="beneficiary">
+              <span class="request-mark" aria-hidden="true">💔</span>
+              <span>
+                <h3 data-i18n="requestBeneficiaryTitle">I need help with a death/beneficiary claim</h3>
+                <p data-i18n="requestBeneficiaryDesc">We will guide you through the relevant process.</p>
+              </span>
+            </button>
+            <button type="button" class="request-card" data-request="plan">
+              <span class="request-mark" aria-hidden="true">💰</span>
+              <span>
+                <h3 data-i18n="requestPlanTitle">I need help with my financial plan</h3>
+                <p data-i18n="requestPlanDesc">Reviews, goals and planning requests.</p>
+              </span>
+            </button>
+            <button type="button" class="request-card" data-request="other">
+              <span class="request-mark" aria-hidden="true">❓</span>
+              <span>
+                <h3 data-i18n="requestOtherTitle">Something else</h3>
+                <p data-i18n="requestOtherDesc">Describe what you need in your own words.</p>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-requests" class="app-view" hidden>
+        <h1 class="page-title" data-i18n="myClaimsHeading">My Requests</h1>
+        <p class="page-lead">Track accident reports and other requests you have started.</p>
+        <div id="claimsList" class="claim-card-list"></div>
+      </section>
+
+      <section id="view-goals" class="app-view" hidden>
+        <h1 class="page-title" data-i18n="navGoals">Goals</h1>
+        <p class="page-lead">Your adviser can help you review these when you ask for a financial-plan conversation.</p>
+        <div class="panel" style="margin-top: 0.85rem;">
+          <h2 class="section-title">Retirement savings</h2>
+          <p class="section-subtitle">On track for your 2026 review. No action needed this week.</p>
+        </div>
+        <div class="panel" style="margin-top: 0.65rem;">
+          <h2 class="section-title">Emergency fund</h2>
+          <p class="section-subtitle">You asked to revisit this after your next salary date.</p>
+        </div>
+      </section>
+
+      <section id="view-messages" class="app-view" hidden>
+        <h1 class="page-title" data-i18n="navMessages">Messages</h1>
+        <p class="page-lead">Short updates from Royal Square. We will also SMS or WhatsApp you if you miss something important.</p>
+        <article class="claim-card" style="margin-top: 0.85rem;">
+          <div>
+            <div class="claim-ref-number">Claim #RS-1042</div>
+            <p class="section-subtitle">Please upload the police document so assessment can continue.</p>
+          </div>
+        </article>
+        <article class="claim-card">
+          <div>
+            <div class="claim-ref-number">Investment update</div>
+            <p class="section-subtitle">Your latest statement has been received. No action required.</p>
+          </div>
+        </article>
+      </section>
+
+      <section id="view-settings" class="app-view" hidden>
+        <h1 class="sr-only" data-i18n="settingsBtn">Settings</h1>
+        <div class="settings-layout">
+          <section class="settings-section" aria-labelledby="setAccount">
+            <h3 id="setAccount" data-i18n="accountTitle">Account</h3>
+            <div class="review-row">
+              <div class="review-key" data-i18n="identificationMethod">Identification method</div>
+              <div class="review-val" id="settingsIdMethod">South African ID Number</div>
+            </div>
+            <div class="review-row">
+              <div class="review-key" data-i18n="contactInformation">Contact information</div>
+              <div class="review-val" id="settingsContact">082 555 0192 · nokuthula@example.co.za</div>
+            </div>
+            <div style="margin-top: 0.75rem;">
+              <button type="button" id="btnSignOut" class="btn btn-secondary" data-i18n="btnSignOut">Sign out</button>
+            </div>
+          </section>
+
+          <section class="settings-section" aria-labelledby="setA11y">
+            <h3 id="setA11y" data-i18n="accessibilityTitle">Accessibility</h3>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="readImportantInstructions">Read Aloud on important instructions</span>
+              <label class="switch">
+                <input type="checkbox" id="toggleReadAloudPref">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="form-group" style="margin-top: 0.7rem;">
+              <label for="settingsVoiceSelect" class="form-label" data-i18n="voiceSelection">Voice selection</label>
+              <select id="settingsVoiceSelect" class="settings-select">
+                <option value="1">Voice 1 — Natural female voice</option>
+                <option value="2">Voice 2 — Natural male voice</option>
+                <option value="3">Voice 3 — Alternative female voice</option>
+                <option value="4">Voice 4 — Alternative male voice</option>
+              </select>
+            </div>
+            <p class="form-label" data-i18n="textSizeLabel">Text size</p>
+            <div class="choice-group">
+              <button type="button" class="btn-choice text-size-btn" data-size="normal" data-i18n="textNormal">Normal</button>
+              <button type="button" class="btn-choice text-size-btn" data-size="large" data-i18n="textLarge">Large</button>
+              <button type="button" class="btn-choice text-size-btn" data-size="xlarge" data-i18n="textXLarge">Extra large</button>
+            </div>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="highContrast">High contrast mode</span>
+              <label class="switch">
+                <input type="checkbox" id="toggleContrastInput">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </section>
+
+          <section class="settings-section" aria-labelledby="setLang">
+            <h3 id="setLang" data-i18n="languageLabel">Language</h3>
+            <label for="langSelect" class="form-label" data-i18n="preferredLanguage">Preferred language</label>
+            <select id="langSelect" class="lang-select">
+              <option value="en">English</option>
+              <option value="zu">isiZulu</option>
+              <option value="xh">isiXhosa</option>
+              <option value="af">Afrikaans</option>
+              <option value="nso">Sepedi</option>
+              <option value="tn">Setswana</option>
+              <option value="st">Sesotho</option>
+              <option value="ts">isiTsonga</option>
+              <option value="ss">siSwati</option>
+              <option value="ve">Tshivenda</option>
+              <option value="nr">isiNdebele</option>
+            </select>
+          </section>
+
+          <section class="settings-section" aria-labelledby="setNotes">
+            <h3 id="setNotes" data-i18n="notificationsTitle">Notifications</h3>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="smsNotifications">SMS notifications</span>
+              <label class="switch"><input type="checkbox" id="toggleSms" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="whatsappNotifications">WhatsApp notifications</span>
+              <label class="switch"><input type="checkbox" id="toggleWhatsApp"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="emailNotifications">Email notifications</span>
+              <label class="switch"><input type="checkbox" id="toggleEmail" checked><span class="slider"></span></label>
+            </div>
+          </section>
+
+          <section class="settings-section" aria-labelledby="setPrivacy">
+            <h3 id="setPrivacy" data-i18n="privacySecurityTitle">Privacy &amp; Security</h3>
+            <p class="section-subtitle">We use your information only to process the request you start. You can withdraw consent at any time by signing out or contacting us.</p>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="consentDocuments">Consent to process request documents</span>
+              <label class="switch"><input type="checkbox" id="toggleConsent" checked><span class="slider"></span></label>
+            </div>
+            <p class="section-subtitle" style="margin-top: 0.65rem;">Security: this prototype stores information on this device until it is submitted.</p>
+            <div class="toggle-switch-row">
+              <span class="switch-label" data-i18n="workOfflineDemo">Work offline (demo)</span>
+              <label class="switch"><input type="checkbox" id="toggleOfflineSim"><span class="slider"></span></label>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-generic" class="app-view" hidden>
+        <h1 id="genericTitle" class="page-title" data-i18n="genericStartTitle">Start a request</h1>
+        <p id="genericLead" class="page-lead" data-i18n="genericStartLead">Tell us what you need. We will route this to the right team.</p>
+        <form id="genericForm" class="panel" style="margin-top: 0.9rem;" novalidate>
+          <div class="ai-scan-panel">
+            <div class="ai-scan-copy">
+              <strong data-i18n="aiScanTitle">AI document scan</strong>
+              <span data-i18n="aiScanDesc">Take a photo or upload a document and the demo AI will read it and fill this request for you.</span>
+            </div>
+            <div class="ai-scan-actions">
+              <button type="button" id="btnGenericScan" class="btn btn-primary btn-sm" data-i18n="aiScanButton">📷 Scan document</button>
+              <button type="button" id="btnGenericSampleScan" class="btn btn-secondary btn-sm" data-i18n="aiSampleButton">Use demo document</button>
+            </div>
+            <input type="file" id="genericScanInput" accept="image/*,.pdf,.png,.jpg,.jpeg" capture="environment" hidden>
+            <div id="genericScanStatus" class="ai-scan-status" hidden></div>
+          </div>
+          <div class="form-group">
+            <label for="genericDetail" class="form-label" data-i18n="genericDetailLabel">What do you need?</label>
+            <textarea id="genericDetail" class="form-control" rows="4" required></textarea>
+          </div>
+          <div class="form-nav-row">
+            <button type="button" id="btnGenericCancel" class="btn btn-secondary" data-i18n="btnCancelReturn">Back to home</button>
+            <button type="submit" class="btn btn-primary" data-i18n="submitRequest">Submit request</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="view-report" class="app-view" hidden aria-labelledby="reportFlowHeading">
+        <h1 id="reportFlowHeading" class="sr-only">Accident reporting</h1>
+
+        <nav class="progress-container" aria-label="Claim progress">
+          <ol class="progress-steps">
+            <li id="pStep1" class="progress-step-item active" aria-current="step">
+              <div class="step-circle">1</div>
+              <span class="step-label">What happened</span>
+            </li>
+            <li id="pStep2" class="progress-step-item">
+              <div class="step-circle">2</div>
+              <span class="step-label">Documents</span>
+            </li>
+            <li id="pStep3" class="progress-step-item">
+              <div class="step-circle">3</div>
+              <span class="step-label">Review</span>
+            </li>
+            <li id="pStep4" class="progress-step-item">
+              <div class="step-circle">4</div>
+              <span class="step-label">Status</span>
+            </li>
+          </ol>
+        </nav>
+
+        <aside class="guidance-card">
+          <div class="guidance-header">
+            <strong style="font-size: 0.8125rem;">This step</strong>
+            <button id="btnReadGuidance" class="btn btn-secondary btn-sm" type="button">🔊 Read Aloud</button>
+          </div>
+          <div class="guidance-q" data-i18n="whatNext">What do I need to do next?</div>
+          <div id="guideNext" class="guidance-a">Answer the questions below, then continue.</div>
+        </aside>
+
+        <section id="step-1" class="panel" aria-labelledby="step1Title">
+          <h2 id="step1Title" class="section-title" data-i18n="step1Title">Step 1 — Tell us what happened</h2>
+          <div class="ai-scan-panel accident-ai-scan">
+            <div class="ai-scan-copy">
+              <strong data-i18n="aiAccidentTitle">Scan a document or photo to fill the accident form</strong>
+              <span data-i18n="aiAccidentDesc">The demo AI can read a licence, vehicle document, police document or accident photo and fill the fields below for you.</span>
+            </div>
+            <div class="ai-scan-actions">
+              <button type="button" id="btnAccidentScan" class="btn btn-primary btn-sm" data-i18n="aiScanButton">📷 Scan document</button>
+              <button type="button" id="btnAccidentSampleScan" class="btn btn-secondary btn-sm" data-i18n="aiSampleButton">Use demo document</button>
+            </div>
+            <input type="file" id="accidentScanInput" accept="image/*,.pdf,.png,.jpg,.jpeg" capture="environment" hidden>
+            <div id="accidentScanStatus" class="ai-scan-status" hidden></div>
+          </div>
+          <form id="formStep1" novalidate>
+            <div class="form-row two">
+              <div class="form-group">
+                <label for="inputDate" class="form-label">Date</label>
+                <input type="date" id="inputDate" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="inputTime" class="form-label">Approximate time</label>
+                <input type="time" id="inputTime" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputLocation" class="form-label">Location</label>
+              <input type="text" id="inputLocation" class="form-control" placeholder="Street, suburb or landmark">
+            </div>
+            <div class="form-group">
+              <label for="inputVehicleReg" class="form-label">Vehicle registration</label>
+              <input type="text" id="inputVehicleReg" class="form-control" placeholder="e.g. CA 145-987">
+            </div>
+            <div class="form-group">
+              <label for="inputDescription" class="form-label">Short description</label>
+              <textarea id="inputDescription" class="form-control" rows="3" placeholder="In your own words, what happened?"></textarea>
+            </div>
+            <div class="form-nav-row">
+              <button type="button" id="btnStep1Cancel" class="btn btn-secondary">Back to home</button>
+              <button type="submit" class="btn btn-primary">Continue</button>
+            </div>
+          </form>
+        </section>
+
+        <section id="step-2" class="panel" hidden aria-labelledby="step2Title">
+          <h2 id="step2Title" class="section-title">Step 2 — Provide supporting documents</h2>
+          <p class="section-subtitle" style="margin-bottom: 0.9rem;">Upload what you have now. You can add more later.</p>
+
+          <div class="doc-upload-card" id="cardDocPolice">
+            <div class="doc-card-header">
+              <div>
+                <h3 class="doc-card-title">Police documentation</h3>
+                <p class="doc-card-desc">Case document or SAPS report.</p>
+              </div>
+              <span class="status-pill action-needed" id="badgePolice">Still needed</span>
+            </div>
+            <div class="doc-actions-row">
+              <input type="file" id="filePolice" accept="image/*,application/pdf" class="file-input-hidden">
+              <button type="button" class="btn btn-primary btn-sm" id="btnUploadPolice">Upload</button>
+              <button type="button" id="btnSamplePolice" class="btn btn-secondary btn-sm">Use sample</button>
+            </div>
+            <div id="previewPolice" class="doc-preview-box" hidden>
+              <div class="doc-thumb" style="background:#f3f3f3;display:grid;place-items:center;">PDF</div>
+              <div class="doc-meta">
+                <div class="doc-name" id="fileNamePolice">police_report.pdf</div>
+                <div class="doc-status-badge">Saved on this device</div>
+              </div>
+              <button type="button" id="btnRemovePolice" class="btn btn-secondary btn-sm">Remove</button>
+            </div>
+          </div>
+
+          <div class="doc-upload-card" id="cardDocDamage">
+            <div class="doc-card-header">
+              <div>
+                <h3 class="doc-card-title">Photos</h3>
+                <p class="doc-card-desc">Damage, scene or vehicle photos.</p>
+              </div>
+              <span class="status-pill action-needed" id="badgeDamage">Still needed</span>
+            </div>
+            <div class="doc-actions-row">
+              <input type="file" id="fileDamage" accept="image/*" class="file-input-hidden">
+              <button type="button" class="btn btn-primary btn-sm" id="btnUploadDamage">Upload</button>
+              <button type="button" id="btnSampleDamage" class="btn btn-secondary btn-sm">Use sample</button>
+            </div>
+            <div id="scanBoxDamage" class="scan-progress-box" hidden>
+              <div class="scan-status-text" id="scanTextDamage">Uploading…</div>
+              <div class="progress-bar-track"><div class="progress-bar-fill" id="scanFillDamage"></div></div>
+            </div>
+            <div id="previewDamage" class="doc-preview-box" hidden>
+              <img id="imgPreviewDamage" src="assets/damage_sample.jpg" alt="Vehicle damage" class="doc-thumb">
+              <div class="doc-meta">
+                <div class="doc-name" id="fileNameDamage">vehicle_damage.jpg</div>
+                <div class="doc-status-badge">Saved on this device</div>
+              </div>
+              <button type="button" id="btnRemoveDamage" class="btn btn-secondary btn-sm">Remove</button>
+            </div>
+          </div>
+
+          <div class="doc-upload-card" id="cardDocLicense">
+            <div class="doc-card-header">
+              <div>
+                <h3 class="doc-card-title">Vehicle documents</h3>
+                <p class="doc-card-desc">Licence disc, registration or licence card.</p>
+              </div>
+              <span class="status-pill review" id="badgeLicense">Optional</span>
+            </div>
+            <div class="doc-actions-row">
+              <input type="file" id="fileLicense" accept="image/*" class="file-input-hidden">
+              <button type="button" class="btn btn-secondary btn-sm" id="btnUploadLicense">Upload</button>
+              <button type="button" id="btnSampleLicense" class="btn btn-secondary btn-sm">Use sample</button>
+            </div>
+            <div id="scanBoxLicense" class="scan-progress-box" hidden>
+              <div class="scan-status-text" id="scanTextLicense">Uploading…</div>
+              <div class="progress-bar-track"><div class="progress-bar-fill" id="scanFillLicense"></div></div>
+            </div>
+            <div id="previewLicense" class="doc-preview-box" hidden>
+              <div class="doc-thumb" style="background:#f3f3f3;display:grid;place-items:center;">DOC</div>
+              <div class="doc-meta">
+                <div class="doc-name" id="fileNameLicense">vehicle_licence.jpg</div>
+                <div class="doc-status-badge">Saved on this device</div>
+              </div>
+              <button type="button" id="btnRemoveLicense" class="btn btn-secondary btn-sm">Remove</button>
+            </div>
+          </div>
+
+          <div class="doc-upload-card" id="cardDocOther">
+            <div class="doc-card-header">
+              <div>
+                <h3 class="doc-card-title">Other supporting evidence</h3>
+                <p class="doc-card-desc">Anything else that helps explain what happened.</p>
+              </div>
+            </div>
+            <div class="doc-actions-row">
+              <input type="file" id="fileOther" accept="image/*,application/pdf" class="file-input-hidden">
+              <button type="button" class="btn btn-secondary btn-sm" id="btnUploadOther">Upload</button>
+            </div>
+            <div id="previewOther" class="doc-preview-box" hidden>
+              <div class="doc-meta">
+                <div class="doc-name" id="fileNameOther">supporting_file</div>
+                <div class="doc-status-badge">Saved on this device</div>
+              </div>
+              <button type="button" id="btnRemoveOther" class="btn btn-secondary btn-sm">Remove</button>
+            </div>
+          </div>
+
+          <div class="form-nav-row">
+            <button type="button" id="btnStep2Back" class="btn btn-secondary">Back</button>
+            <button type="button" id="btnStep2Next" class="btn btn-primary">Continue</button>
+          </div>
+        </section>
+
+        <section id="step-3" class="panel" hidden aria-labelledby="step3Title">
+          <h2 id="step3Title" class="section-title">Step 3 — Review information</h2>
+          <p class="section-subtitle" style="margin-bottom: 0.85rem;">Correct anything that does not look right before you submit.</p>
+
+          <div class="review-card">
+            <div class="detected-flag">✓ Information detected</div>
+            <div class="review-row">
+              <div class="review-key">SAPS Case Number</div>
+              <div class="review-val"><input type="text" id="revCaseNumber" class="form-control" value="482/09/2026"></div>
+            </div>
+            <div class="review-row">
+              <div class="review-key">Police Station</div>
+              <div class="review-val"><input type="text" id="revStation" class="form-control" value="Cape Town Central"></div>
+            </div>
+            <div class="review-row">
+              <div class="review-key">Investigating Officer</div>
+              <div class="review-val"><input type="text" id="revOfficer" class="form-control" value="Sgt. Dlamini"></div>
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-card-header">
+              <h3 class="review-card-title">Accident details</h3>
+              <button type="button" id="btnEditStep1" class="btn btn-secondary btn-sm">Edit</button>
+            </div>
+            <div class="review-row"><div class="review-key">Date</div><div class="review-val" id="revDate">-</div></div>
+            <div class="review-row"><div class="review-key">Time</div><div class="review-val" id="revTime">-</div></div>
+            <div class="review-row"><div class="review-key">Location</div><div class="review-val" id="revLocation">-</div></div>
+            <div class="review-row"><div class="review-key">Vehicle registration</div><div class="review-val" id="revVehicle">-</div></div>
+            <div class="review-row"><div class="review-key">Description</div><div class="review-val" id="revDescription">-</div></div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-card-header">
+              <h3 class="review-card-title">Documents</h3>
+              <button type="button" id="btnEditStep2" class="btn btn-secondary btn-sm">Edit</button>
+            </div>
+            <div class="review-row"><div class="review-key">Police documentation</div><div class="review-val" id="revDocPolice">Not uploaded</div></div>
+            <div class="review-row"><div class="review-key">Photos</div><div class="review-val" id="revDocDamage">Not uploaded</div></div>
+            <div class="review-row"><div class="review-key">Vehicle documents</div><div class="review-val" id="revDocLicense">None provided</div></div>
+            <div class="review-row"><div class="review-key">Other evidence</div><div class="review-val" id="revDocOther">None provided</div></div>
+          </div>
+
+          <div class="form-nav-row">
+            <button type="button" id="btnStep3Back" class="btn btn-secondary">Back</button>
+            <button type="button" id="btnSubmitClaim" class="btn btn-primary">Submit request</button>
+          </div>
+        </section>
+
+        <section id="step-4" class="panel confirmation-card" hidden aria-labelledby="step4Title">
+          <h2 id="step4Title" class="section-title">Claim status</h2>
+          <div class="ref-code-box">
+            <div class="form-hint">Claim number</div>
+            <div id="confirmedRefCode" class="ref-code">RS-1042</div>
+            <div id="confirmedOfflineBadge" class="status-pill waiting-sync" hidden>Saved on this device</div>
+          </div>
+          <div class="status-track" aria-label="Claim progress">
+            <span id="stSubmitted" class="current">Submitted</span>
+            <span id="stAssessment">Assessment</span>
+            <span id="stAuth">Awaiting Authorisation</span>
+            <span id="stDone">Completed</span>
+          </div>
+          <h3 class="section-title">What happens next?</h3>
+          <div class="timeline-list">
+            <div class="timeline-item">
+              <div class="timeline-step-num">1</div>
+              <div>
+                <strong>We have your report</strong>
+                <p class="section-subtitle">Your information is stored securely. If you were offline, it stays on this device until we can submit it.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-step-num">2</div>
+              <div>
+                <strong>Assessment</strong>
+                <p class="section-subtitle">A claims administrator checks the documents. You will hear from us if anything is missing.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-step-num">3</div>
+              <div>
+                <strong>Authorisation if needed</strong>
+                <p class="section-subtitle">An adviser steps in only when a human decision is required.</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-nav-row">
+            <button type="button" id="btnFinishReturnHome" class="btn btn-secondary" data-i18n="btnReturnHome">Return to home</button>
+            <button type="button" id="btnPrintSummary" class="btn btn-primary" data-i18n="btnPrintSummary">Save or print summary</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-brand">Royal Square Financial</p>
+          <p data-i18n="footerGuide">Tell us what happened. We will guide the next step.</p>
+        </div>
+        <div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="errorModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalErrorTitle">
+    <div class="modal-card">
+      <h2 id="modalErrorTitle" class="modal-title" data-i18n="errorTitle">Something went wrong</h2>
+      <p id="modalErrorDesc" class="modal-body">Your information has been saved on this device. Please try again, or call us if you need help now.</p>
+      <button type="button" id="btnCloseModal" class="btn btn-primary" data-i18n="btnClose">Close</button>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

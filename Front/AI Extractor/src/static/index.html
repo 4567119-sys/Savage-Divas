@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Square Financial — AI Document Extractor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1>Royal Square Financial</h1>
+          <span class="brand-badge">Claims Document Intelligence Subsystem</span>
+        </div>
+      </div>
+      <div class="navbar-actions">
+        <div id="serviceStatus" class="status-indicator online">
+          <span class="status-dot"></span>
+          <span id="statusText">Checking Service...</span>
+        </div>
+        <a href="/docs" target="_blank" class="nav-btn api-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Swagger Docs
+        </a>
+      </div>
+    </header>
+
+    <!-- Royal Square Portfolio Banner -->
+    <div class="portfolio-banner">
+      <span class="portfolio-tag">Financial Planning</span>
+      <span class="portfolio-tag">Life Insurance</span>
+      <span class="portfolio-tag">Funeral Insurance</span>
+      <span class="portfolio-tag">Health Insurance</span>
+      <span class="portfolio-tag active">Personal Insurance</span>
+      <span class="portfolio-tag active">Commercial Insurance</span>
+      <span class="portfolio-tag">Goal-Based Investments</span>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-grid">
+      <!-- Left Column: Upload & Controls -->
+      <section class="panel upload-panel">
+        <div class="panel-header">
+          <h2>Document Ingestion</h2>
+          <span class="panel-desc">Upload accident claim, police docket, or SAPS AR form</span>
+        </div>
+
+        <!-- Dropzone -->
+        <div id="dropzone" class="dropzone" tabindex="0">
+          <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.txt" />
+          <div class="dropzone-content">
+            <div class="drop-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <h3>Drag & drop document here</h3>
+            <p>Supports <strong>PDF, PNG, JPG, or Scanned TXT</strong></p>
+            <button type="button" id="browseBtn" class="secondary-btn">Browse Local File</button>
+          </div>
+        </div>
+
+        <!-- Selected File Banner -->
+        <div id="fileBanner" class="file-banner hidden">
+          <div class="file-icon">📄</div>
+          <div class="file-details">
+            <span id="fileName" class="file-name">document.pdf</span>
+            <span id="fileSize" class="file-size">0 KB</span>
+          </div>
+          <button id="clearFileBtn" class="icon-btn" title="Remove file">✕</button>
+        </div>
+
+        <!-- Engine & Options -->
+        <div class="control-group">
+          <label for="engineSelect">Extraction Engine</label>
+          <div class="select-wrapper">
+            <select id="engineSelect">
+              <option value="auto" selected>Auto (Multimodal AI with Local Fallback)</option>
+              <option value="gemini">Gemini Vision AI (API Key Required)</option>
+              <option value="local">Local Heuristic OCR & Pattern Parser</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Samples for Hackathon Demo -->
+        <div class="quick-samples">
+          <label>Quick Test Fixtures (One-Click Demo):</label>
+          <div class="sample-buttons">
+            <button type="button" id="sample1Btn" class="sample-chip">
+              <span>🚗 Sandton SAPS Personal Motor #1</span>
+            </button>
+            <button type="button" id="sample2Btn" class="sample-chip">
+              <span>🚗 JHB Central Crash Report #2</span>
+            </button>
+            <button type="button" id="sample3Btn" class="sample-chip highlight-chip">
+              <span>🚛 Midrand SAPS Commercial Fleet #3</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="extractBtn" class="primary-btn pulse-glow" disabled>
+          <span class="btn-text">Extract Document Fields</span>
+          <span class="spinner hidden"></span>
+        </button>
+      </section>
+
+      <!-- Right Column: Extraction Results & JSON -->
+      <section class="panel results-panel">
+        <div class="panel-header">
+          <div class="results-title-group">
+            <h2>Extraction Results</h2>
+            <div id="confidenceGauge" class="confidence-gauge hidden">
+              <span class="gauge-label">Confidence</span>
+              <span id="overallScore" class="gauge-value">--%</span>
+            </div>
+          </div>
+          <div class="tab-buttons">
+            <button id="tabSummary" class="tab-btn active">Visual Dashboard</button>
+            <button id="tabJson" class="tab-btn">JSON Response</button>
+            <button id="tabIntegration" class="tab-btn">Node.js Express Snippet</button>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <h3>No Document Processed Yet</h3>
+          <p>Upload a police accident report or click a sample fixture above to see AI extraction in real time.</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state hidden">
+          <div class="radar-spinner"></div>
+          <h3>Analyzing Document with AI...</h3>
+          <p id="loadingMsg">Running text extraction, detecting case numbers, police stations, officers & dates</p>
+        </div>
+
+        <!-- Tab 1: Visual Dashboard -->
+        <div id="dashboardView" class="dashboard-view hidden">
+          <!-- Primary 4 Core Fields requested -->
+          <div class="section-label">Core Police & Claim Identifiers</div>
+          <div class="core-grid">
+            <!-- 1. Case Number -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Case Number / CAS</span>
+                <span id="caseConf" class="conf-pill">--</span>
+              </div>
+              <div id="caseValue" class="field-value">--</div>
+              <div id="caseSource" class="field-snippet">--</div>
+            </div>
+
+            <!-- 2. Police Station -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Police Station</span>
+                <span id="stationConf" class="conf-pill">--</span>
+              </div>
+              <div id="stationValue" class="field-value">--</div>
+              <div id="stationSource" class="field-snippet">--</div>
+            </div>
+
+            <!-- 3. Officer Name -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Attending Officer</span>
+                <span id="officerConf" class="conf-pill">--</span>
+              </div>
+              <div id="officerValue" class="field-value">--</div>
+              <div id="officerSource" class="field-snippet">--</div>
+            </div>
+
+            <!-- 4. Incident Date -->
+            <div class="field-card primary-card">
+              <div class="field-card-header">
+                <span class="field-label">Incident Date</span>
+                <span id="dateConf" class="conf-pill">--</span>
+              </div>
+              <div id="dateValue" class="field-value">--</div>
+              <div id="dateSource" class="field-snippet">--</div>
+            </div>
+          </div>
+
+          <!-- Royal Square Insurance Matching -->
+          <div class="section-label">Royal Square Financial Claim Triage</div>
+          <div class="insurance-triage-card">
+            <div class="triage-item">
+              <span class="triage-label">Matched Insurance Product:</span>
+              <span id="insuranceCategoryValue" class="triage-badge product-badge">--</span>
+            </div>
+            <div class="triage-item">
+              <span class="triage-label">Policy Number:</span>
+              <span id="policyValue" class="triage-badge policy-badge">--</span>
+            </div>
+            <div class="triage-item">
+              <span class="triage-label">Claim Classification:</span>
+              <span id="claimTypeValue" class="triage-val">--</span>
+            </div>
+          </div>
+
+          <!-- Secondary Context Fields -->
+          <div class="section-label">Incident & Vehicular Details</div>
+          <div class="secondary-grid">
+            <div class="sub-card">
+              <span class="sub-label">Time & Location:</span>
+              <div id="timeLocValue" class="sub-val">--</div>
+            </div>
+            <div class="sub-card">
+              <span class="sub-label">Vehicles Involved:</span>
+              <div id="vehiclesValue" class="sub-val">--</div>
+            </div>
+            <div class="sub-card full-width">
+              <span class="sub-label">Damages Summary:</span>
+              <div id="damagesValue" class="sub-val">--</div>
+            </div>
+            <div class="sub-card full-width">
+              <span class="sub-label">Accident Description:</span>
+              <div id="descValue" class="sub-val">--</div>
+            </div>
+          </div>
+
+          <!-- Warnings / Audit Box -->
+          <div id="warningsBox" class="warnings-box hidden">
+            <div class="warning-title">⚠️ Document Audit Flags</div>
+            <ul id="warningsList"></ul>
+          </div>
+
+          <!-- Processing Meta Footer -->
+          <div class="meta-footer">
+            <span id="metaEngine">Engine: --</span>
+            <span id="metaTime">Processing Time: -- ms</span>
+            <span id="metaPages">Pages: --</span>
+          </div>
+        </div>
+
+        <!-- Tab 2: Raw JSON View -->
+        <div id="jsonView" class="json-view hidden">
+          <div class="code-toolbar">
+            <span class="code-lang">JSON Output (Contract Verified)</span>
+            <button id="copyJsonBtn" class="copy-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy JSON
+            </button>
+          </div>
+          <pre><code id="jsonContent">// JSON output will appear here after extraction</code></pre>
+        </div>
+
+        <!-- Tab 3: Node.js Integration Snippet -->
+        <div id="integrationView" class="integration-view hidden">
+          <div class="code-toolbar">
+            <span class="code-lang">Node.js / Express Controller Snippet (Ready to Paste)</span>
+            <button id="copyCodeBtn" class="copy-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Code
+            </button>
+          </div>
+          <pre><code id="integrationCode">// Node.js snippet for your teammates</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">Copied to clipboard!</div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

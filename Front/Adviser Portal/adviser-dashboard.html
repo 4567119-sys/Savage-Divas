@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Royal Square Financial - Internal Adviser Dashboard">
+  <title>Adviser Dashboard | Royal Square Financial</title>
+  
+  <!-- Google Font: DM Sans for a simple, human-designed interface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Adviser Dashboard Stylesheet -->
+  <link rel="stylesheet" href="css/adviser-dashboard.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         LEFT SIDEBAR (Royal Square Financial Black & Red Brand Identity)
+         ==================================================================== -->
+    <aside class="sidebar" id="adviserSidebar">
+      <!-- Royal Square Financial Brand Header -->
+      <div class="sidebar-brand">
+        <div class="brand-crest">
+          <!-- Royal Square Brand Crest Icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <path d="M12 8v8"></path>
+            <path d="M8 12h8"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Royal Square</span>
+          <span class="brand-subtitle">Financial Services</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Main Navigation</span>
+
+        <a href="adviser-dashboard.html" class="nav-item active" id="navDashboard" title="Dashboard">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <!-- Grid / Dashboard Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </span>
+            <span class="nav-item-title">Dashboard</span>
+          </div>
+        </a>
+
+        <a href="cases.html" class="nav-item" id="navCases" title="Cases">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <!-- Folder / Cases Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Cases</span>
+          </div>
+          <span class="nav-badge">127</span>
+        </a>
+
+        <a href="notifications.html" class="nav-item" id="navNotifications" title="Notifications">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <!-- Bell Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Notifications</span>
+          </div>
+          <span class="nav-badge alert">3</span>
+        </a>
+
+        <a href="settings.html" class="nav-item" id="navSettings" title="Settings">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <!-- Settings Cog Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Settings</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Adviser Profile Section at Bottom -->
+      <div class="sidebar-footer">
+        <div class="adviser-profile-card" id="sidebarAdviserCard" title="View Adviser Profile">
+          <div class="adviser-avatar-wrap" id="sidebarAvatarWrap">
+            <div class="avatar-fallback">SA</div>
+            <span class="status-indicator" title="Online & Available"></span>
+          </div>
+          <div class="adviser-info">
+            <span class="adviser-name" id="sidebarAdviserName">Sarah Adams</span>
+            <span class="adviser-role" id="sidebarAdviserRole">Financial Adviser — Cape Town</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN CONTENT AREA
+         ==================================================================== -->
+    <main class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-greeting-wrap">
+          <h1 class="header-title">Good morning, Sarah 👋</h1>
+          <p class="header-subtitle">Routine cases are handled automatically. You only see exceptions that require your attention.</p>
+        </div>
+
+        <div class="header-actions">
+          <!-- Calendar / Date Badge -->
+          <div class="header-date-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="headerDateText">Today</span>
+          </div>
+
+          <!-- Notification Bell with Dropdown -->
+          <div class="notif-btn-wrap">
+            <button class="icon-button" id="btnNotifications" aria-label="Notifications" title="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notif-dot"></span>
+            </button>
+
+            <!-- Notifications Drawer -->
+            <div class="notifications-dropdown" id="notificationsDropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <span class="notif-badge-pill">3 Actionable</span>
+              </div>
+              <div class="notif-list" id="notificationsList">
+                <!-- Injected by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Body Content -->
+      <div class="dashboard-content">
+        <!-- ================================================================
+             4 SUMMARY CARDS (DEMO / MOCK DATA)
+             ================================================================ -->
+        <section class="summary-cards-grid" aria-label="Case Metrics Summary">
+          <!-- Card 1: Active Cases -->
+          <div class="summary-card active-cases" id="cardActiveCases">
+            <div class="card-top-row">
+              <span class="card-label">Active Cases</span>
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value" id="metricActiveCasesVal">127</div>
+            <div class="card-footer-meta">
+              <span class="card-tag" style="background:#f1f5f9;color:#334155;">Demo total</span>
+              <span>across active portfolios</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Requires Adviser Review -->
+          <div class="summary-card human-intervention" id="cardHumanIntervention">
+            <div class="card-top-row">
+              <span class="card-label">Requires Adviser Review</span>
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value" id="metricHumanInterventionVal" style="color:var(--rs-red-600);">8</div>
+            <div class="card-footer-meta">
+              <span>Exceptions automation cannot resolve</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Waiting on Client -->
+          <div class="summary-card waiting-on-client" id="cardWaitingOnClient">
+            <div class="card-top-row">
+              <span class="card-label">Waiting on Client</span>
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value" id="metricWaitingOnClientVal">21</div>
+            <div class="card-footer-meta">
+              <span class="card-tag warning">Pending</span>
+              <span>Pending client responses</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Progressing Normally -->
+          <div class="summary-card progressing-normally" id="cardProgressingNormally">
+            <div class="card-top-row">
+              <span class="card-label">Progressing Normally</span>
+              <div class="card-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value" id="metricProgressingNormallyVal">98</div>
+            <div class="card-footer-meta">
+              <span class="card-tag success">Healthy</span>
+              <span>Meeting operational SLAs</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             OPERATIONAL ANALYTICS SECTION (DEMO / MOCK METRICS)
+             ================================================================ -->
+        <section class="operational-analytics-section" aria-labelledby="operationalAnalyticsHeading">
+          <div class="analytics-banner">
+            <div class="analytics-banner-left">
+              <h2 class="analytics-banner-title" id="operationalAnalyticsHeading">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rs-red-400)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                Operational Analytics
+              </h2>
+              <p class="analytics-banner-subtitle">
+                Demonstrating automation throughput versus manual exception intervention.
+              </p>
+            </div>
+            <span class="analytics-disclaimer-pill">Demo / Mock Metrics</span>
+          </div>
+
+          <div class="analytics-grid-two-col single-analytics-card">
+             <!-- Case Distribution & Key Speed Metrics -->
+            <div class="analytics-card" aria-labelledby="distributionHeading">
+              <div class="analytics-card-header">
+                <h3 class="analytics-card-title" id="distributionHeading">Case Distribution</h3>
+                <span class="panel-count-pill">127 Total Portfolio</span>
+              </div>
+
+              <div class="distribution-bars-list">
+                <div class="distribution-item">
+                  <div class="distribution-item-top">
+                    <span>Progressing Normally</span>
+                    <span><strong>98</strong> cases (77%)</span>
+                  </div>
+                  <div class="distribution-track">
+                    <div class="distribution-fill normal" style="width:77%;"></div>
+                  </div>
+                </div>
+
+                <div class="distribution-item">
+                  <div class="distribution-item-top">
+                    <span>Waiting on Client</span>
+                    <span><strong>21</strong> cases (17%)</span>
+                  </div>
+                  <div class="distribution-track">
+                    <div class="distribution-fill waiting" style="width:17%;"></div>
+                  </div>
+                </div>
+
+                <div class="distribution-item">
+                  <div class="distribution-item-top">
+                    <span style="color:var(--rs-red-600);">Adviser Review</span>
+                    <span style="color:var(--rs-red-600);"><strong>8</strong> cases (6%)</span>
+                  </div>
+                  <div class="distribution-track">
+                    <div class="distribution-fill review" style="width:6%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="analytics-metrics-row">
+                <div class="analytics-metric-box">
+                  <span class="analytics-metric-label">Automation Rate</span>
+                  <div class="analytics-metric-val" style="color:var(--rs-red-600);">94%</div>
+                  <span class="analytics-metric-sub">Resolved without manual intervention</span>
+                </div>
+                <div class="analytics-metric-box">
+                  <span class="analytics-metric-label">Avg Automated Time</span>
+                  <div class="analytics-metric-val">18 min</div>
+                  <span class="analytics-metric-sub">Average automated processing turnaround</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             CASES REQUIRING ADVISER REVIEW & RECENT ACTIVITY
+             ================================================================ -->
+        <div class="dashboard-grid-split">
+          <!-- Cases Requiring Adviser Review Table -->
+          <section class="section-panel" aria-labelledby="casesAttentionHeading">
+            <div class="panel-header">
+              <div class="panel-header-left">
+                <h2 class="panel-title" id="casesAttentionHeading">Cases Requiring Adviser Review</h2>
+                <span class="panel-count-pill alert" id="casesAttentionCount">3 need review</span>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="cases-table" aria-label="Cases Requiring Adviser Review">
+                <thead>
+                  <tr>
+                    <th scope="col">Claim ID</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Stage</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="casesTableBody">
+                  <!-- Injected by js/adviser-dashboard.js using mock data -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Recent Activity Section -->
+          <section class="section-panel" aria-labelledby="recentActivityHeading">
+            <div class="panel-header">
+              <div class="panel-header-left">
+                <h2 class="panel-title" id="recentActivityHeading">Recent Activity</h2>
+                <span class="panel-count-pill">Live Feed</span>
+              </div>
+            </div>
+
+            <div class="activity-timeline" id="recentActivityTimeline">
+              <!-- Injected by js/adviser-dashboard.js using mock data -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="comingSoonToast" role="status" aria-live="polite">
+    <div class="toast-indicator"></div>
+    <div class="toast-text-wrap">
+      <span class="toast-title" id="toastFeatureName">Feature</span>
+      <span class="toast-sub">Demo notification</span>
+    </div>
+  </div>
+
+  <!-- Isolated Mock Data Script -->
+  <script src="js/adviser-mock-data.js"></script>
+  <!-- Main Dashboard Controller -->
+  <script src="js/adviser-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Royal Square Financial - Adviser Cases Portfolio">
+  <title>Cases | Royal Square Financial</title>
+  
+  <!-- Google Fonts: Outfit & Inter for executive financial typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Adviser Dashboard & Cases Stylesheet -->
+  <link rel="stylesheet" href="css/adviser-dashboard.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <!-- ====================================================================
+         LEFT SIDEBAR (Royal Square Financial Black & Red Brand Identity)
+         ==================================================================== -->
+    <aside class="sidebar" id="adviserSidebar">
+      <!-- Royal Square Financial Brand Header -->
+      <div class="sidebar-brand">
+        <div class="brand-crest">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <path d="M12 8v8"></path>
+            <path d="M8 12h8"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Royal Square</span>
+          <span class="brand-subtitle">Financial Services</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Main Navigation</span>
+
+        <a href="adviser-dashboard.html" class="nav-item" id="navDashboard" title="Dashboard">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </span>
+            <span class="nav-item-title">Dashboard</span>
+          </div>
+        </a>
+
+        <!-- Cases is ACTIVE on this screen -->
+        <a href="cases.html" class="nav-item active" id="navCases" title="Cases">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Cases</span>
+          </div>
+          <span class="nav-badge">127</span>
+        </a>
+
+        <a href="notifications.html" class="nav-item" id="navNotifications" title="Notifications">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Notifications</span>
+          </div>
+          <span class="nav-badge alert">3</span>
+        </a>
+
+        <a href="settings.html" class="nav-item" id="navSettings" title="Settings">
+          <div class="nav-item-left">
+            <span class="nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="nav-item-title">Settings</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Adviser Profile Section at Bottom -->
+      <div class="sidebar-footer">
+        <div class="adviser-profile-card" id="sidebarAdviserCard" title="View Adviser Profile">
+          <div class="adviser-avatar-wrap" id="sidebarAvatarWrap">
+            <div class="avatar-fallback">SA</div>
+            <span class="status-indicator" title="Online & Available"></span>
+          </div>
+          <div class="adviser-info">
+            <span class="adviser-name" id="sidebarAdviserName">Sarah Adams</span>
+            <span class="adviser-role" id="sidebarAdviserRole">Financial Adviser — Cape Town</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN CONTENT AREA
+         ==================================================================== -->
+    <main class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-greeting-wrap">
+          <h1 class="header-title">Cases</h1>
+          <p class="header-subtitle">Monitor automated cases and review exceptions that require your attention.</p>
+        </div>
+
+        <div class="header-actions">
+          <!-- Calendar / Date Badge -->
+          <div class="header-date-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="headerDateText">Today</span>
+          </div>
+
+          <!-- Notification Bell with Dropdown -->
+          <div class="notif-btn-wrap">
+            <button class="icon-button" id="btnNotifications" aria-label="Notifications" title="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notif-dot"></span>
+            </button>
+
+            <!-- Notifications Drawer -->
+            <div class="notifications-dropdown" id="notificationsDropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <span class="notif-badge-pill">3 Actionable</span>
+              </div>
+              <div class="notif-list" id="notificationsList">
+                <!-- Injected by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="dashboard-content">
+        <!-- ================================================================
+             SEARCH & FILTER TOOLBAR
+             ================================================================ -->
+        <section class="cases-filter-toolbar" aria-label="Cases Filtering and Search Controls">
+          <div class="filter-toolbar-inner">
+            <!-- Search Input Box -->
+            <div class="search-input-group">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input 
+                type="text" 
+                id="casesSearchInput" 
+                placeholder="Search claim ID or client..."
+                aria-label="Search cases by client name or claim ID"
+                autocomplete="off"
+              >
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="filter-pills-wrap" role="group" aria-label="Category Filters">
+              <button class="filter-pill-btn active" data-category="All" id="filterAll">
+                All Cases
+                <span class="filter-pill-count">127</span>
+              </button>
+              <button class="filter-pill-btn" data-category="Adviser Review" id="filterReview">
+                Adviser Review
+                <span class="filter-pill-count alert">8</span>
+              </button>
+              <button class="filter-pill-btn" data-category="Waiting on Client" id="filterWaiting">
+                Waiting on Client
+                <span class="filter-pill-count">21</span>
+              </button>
+              <button class="filter-pill-btn" data-category="Progressing Normally" id="filterNormal">
+                Progressing Normally
+                <span class="filter-pill-count">98</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             CASES TABLE (SHOWING 7 OF 127 ACTIVE CASES)
+             ================================================================ -->
+        <section class="section-panel" aria-labelledby="allCasesHeading">
+          <div class="panel-header">
+            <div class="panel-header-left">
+              <h2 class="panel-title" id="allCasesHeading">Case Portfolio</h2>
+              <span class="panel-count-pill" id="casesTableCountBadge">Showing 7 of 127 active cases</span>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="cases-table" aria-label="Adviser Cases Table">
+              <thead>
+                <tr>
+                  <th scope="col">Claim ID</th>
+                  <th scope="col">Client</th>
+                  <th scope="col">Event</th>
+                  <th scope="col">Stage</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Reason</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="casesTableBody">
+                <!-- Injected dynamically by js/adviser-cases.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="comingSoonToast" role="status" aria-live="polite">
+    <div class="toast-indicator"></div>
+    <div class="toast-text-wrap">
+      <span class="toast-title" id="toastFeatureName">Feature</span>
+      <span class="toast-sub">Demo notification</span>
+    </div>
+  </div>
+
+  <!-- Shared Mock Data -->
+  <script src="js/adviser-mock-data.js"></script>
+  <!-- Cases Page Controller -->
+  <script src="js/adviser-cases.js"></script>
+</body>
+</html>
