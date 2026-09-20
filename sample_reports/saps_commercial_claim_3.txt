@@ -1,0 +1,42 @@
+================================================================================
+SOUTH AFRICAN POLICE SERVICE (SAPS) - COMMERCIAL ACCIDENT REPORT
+================================================================================
+STATION: Midrand SAPS
+CAS NO: 512/08/2024
+COMMERCIAL DOCKET REF: RSF-FLEET-9941
+INSURANCE PROVIDER: Royal Square Financial - Commercial Insurance Division
+POLICY NUMBER: POL-COM-448102
+
+SECTION A: INCIDENT PARTICULARS
+--------------------------------------------------------------------------------
+DATE OF ACCIDENT: 2024-08-18
+TIME OF ACCIDENT: 11h15
+ACCIDENT LOCATION: Allandale Road near K101 Intersection, Midrand
+WEATHER: Clear, Dry
+
+SECTION B: COMMERCIAL VEHICLE PARTICULARS
+--------------------------------------------------------------------------------
+VEHICLE 1 (Commercial Fleet):
+  Company / Fleet Owner: Express Cargo Logistics Pty Ltd
+  Make & Model: Isuzu NPR 400 Freight Truck (4-Ton)
+  Registration No: GP 55 TT GP
+  Driver: Mr. Thabo Mokoena (PrDP Code 14 Heavy Vehicle License)
+  Royal Square Financial Commercial Policy: POL-COM-448102
+
+VEHICLE 2:
+  Make & Model: BMW 320i
+  Registration No: JX 88 YZ GP
+  Driver: Mr. David Miller
+
+SECTION C: ACCIDENT SUMMARY & OFFICER INVESTIGATION
+--------------------------------------------------------------------------------
+BRIEF DESCRIPTION:
+Vehicle 1 (Isuzu commercial freight truck) was turning into logistics depot when
+Vehicle 2 attempted an illegal overtake on the left shoulder and made contact
+with the commercial truck's passenger step and cargo chassis. No driver casualties.
+DAMAGES TO VEHICLE: Passenger side diesel tank guard scraped on truck; front bumper torn off on BMW.
+
+INVESTIGATING OFFICER: Warrant Officer P. Ndlovu (Force No: 441092-8)
+SIGNATURE: W/O P. NDLOVU
+STAMP: MIDRAND SAPS - OFFICIAL DISPATCH 2024-08-18
+================================================================================
