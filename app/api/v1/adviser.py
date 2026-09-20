@@ -52,6 +52,67 @@ def get_adviser_cases(
     ]
 
 
+@router.get("/dashboard")
+def get_adviser_dashboard(
+    db: Session = Depends(get_db),
+):
+    cases = (
+        db.query(Case)
+        .filter(
+            Case.status.in_(
+                [
+                    "ADVISER_INTERVENTION",
+                    "ACTION_REQUIRED",
+                    "ADVISER_REVIEW",
+                ]
+            )
+        )
+        .order_by(Case.updated_at.desc())
+        .all()
+    )
+
+    dashboard_cases = []
+    for case in cases:
+        client = db.get(Client, case.client_id)
+        context = (
+            db.query(AdviserInterventionContext)
+            .filter(AdviserInterventionContext.case_id == case.id)
+            .first()
+        )
+
+        outstanding_requirements = [
+            {
+                "id": requirement.id,
+                "title": requirement.title,
+                "requirement_type": requirement.requirement_type,
+                "is_fulfilled": requirement.is_fulfilled,
+            }
+            for requirement in case.requirements
+            if not requirement.is_fulfilled
+        ]
+
+        dashboard_cases.append(
+            {
+                "case_id": case.id,
+                "case_title": case.title,
+                "client_id": case.client_id,
+                "client_name": client.full_name if client else None,
+                "case_type": case.case_type,
+                "current_stage": case.current_stage,
+                "status": case.status,
+                "overall_confidence": case.overall_confidence,
+                "intervention_required": case.status == "ADVISER_INTERVENTION",
+                "trigger_reason": context.trigger_reason if context else None,
+                "automation_summary": context.automation_summary if context else None,
+                "unresolved_issues": context.unresolved_issues if context else None,
+                "outstanding_requirements": outstanding_requirements,
+                "updated_at": case.updated_at,
+            }
+        )
+
+    return dashboard_cases
+
+
 @router.get(
     "/cases/{case_id}/context",
     response_model=AdviserContextResponse,
@@ -215,9 +276,37 @@ def adviser_override(
         case.current_stage = "APPROVED"
         case.status = "APPROVED"
 
+        notification = Notification(
+            id=str(uuid4()),
+            client_id=case.client_id,
+            case_id=case.id,
+            title="Case approved",
+            message=(
+                decision.adviser_notes
+                or "Your case has been approved by your adviser."
+            ),
+            is_read=False,
+        )
+
+        db.add(notification)
+
     elif decision.decision == "REJECT":
         case.current_stage = "REJECTED"
         case.status = "REJECTED"
+
+        notification = Notification(
+            id=str(uuid4()),
+            client_id=case.client_id,
+            case_id=case.id,
+            title="Case requires adviser follow-up",
+            message=(
+                decision.adviser_notes
+                or "Your case has been rejected and requires adviser follow-up."
+            ),
+            is_read=False,
+        )
+
+        db.add(notification)
 
     else:
         case.current_stage = "ADVISER_REVIEW"
